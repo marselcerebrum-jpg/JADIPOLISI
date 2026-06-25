@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dashboard Marketing &amp; Sales JadiPolisi — Jun 2026</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+<script>if(typeof Chart==='undefined'){var s=document.createElement('script');s.src='https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.7/chart.umd.min.js';document.head.appendChild(s);}</script>
+<style>
+:root { color-scheme: light; }
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family:'Segoe UI',system-ui,-apple-system,sans-serif; background:#F0F2F5; color:#1E293B; line-height:1.5; }
+.dashboard { max-width:1400px; margin:0 auto; padding:24px; }
+.header { background:linear-gradient(135deg,#1E293B 0%,#334155 50%,#3B82F6 100%); border-radius:16px; padding:32px; margin-bottom:24px; color:white; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:16px; }
+.header h1 { font-size:28px; font-weight:700; }
+.header .subtitle { font-size:14px; color:#CBD5E1; margin-top:4px; }
+.header .badge { background:rgba(255,255,255,0.15); border:1px solid rgba(255,255,255,0.2); border-radius:8px; padding:8px 16px; font-size:13px; color:#E2E8F0; }
+.header .badge strong { color:#60A5FA; }
+.kpi-row { display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:16px; margin-bottom:24px; }
+.kpi-card { background:white; border-radius:12px; padding:20px; box-shadow:0 1px 3px rgba(0,0,0,0.08); position:relative; overflow:hidden; }
+.kpi-card::before { content:''; position:absolute; top:0; left:0; right:0; height:4px; }
+.kpi-card.ig::before { background:linear-gradient(90deg,#E1306C,#F77737,#FCAF45); }
+.kpi-card.tt::before { background:linear-gradient(90deg,#00F2EA,#FF0050); }
+.kpi-card.green::before { background:#10B981; }
+.kpi-card.red::before { background:#EF4444; }
+.kpi-card.orange::before { background:#F97316; }
+.kpi-card.blue::before { background:#3B82F6; }
+.kpi-card.purple::before { background:#8B5CF6; }
+.kpi-card.gold::before { background:linear-gradient(90deg,#F59E0B,#D97706); }
+.kpi-card.emerald::before { background:linear-gradient(90deg,#10B981,#059669); }
+.kpi-card.indigo::before { background:linear-gradient(90deg,#6366F1,#4F46E5); }
+.kpi-card.teal::before { background:linear-gradient(90deg,#14B8A6,#0D9488); }
+.kpi-card.rose::before { background:linear-gradient(90deg,#F43F5E,#E11D48); }
+.kpi-card.cyan::before { background:linear-gradient(90deg,#06B6D4,#0891B2); }
+.kpi-label { font-size:12px; color:#64748B; text-transform:uppercase; letter-spacing:0.5px; font-weight:600; }
+.kpi-value { font-size:28px; font-weight:700; margin:4px 0; color:#1E293B; }
+.kpi-sub { font-size:12px; color:#64748B; }
+.kpi-change { display:inline-flex; align-items:center; gap:2px; font-size:12px; font-weight:600; padding:2px 8px; border-radius:4px; }
+.kpi-change.up { background:#D1FAE5; color:#059669; }
+.kpi-change.down { background:#FEE2E2; color:#DC2626; }
+.kpi-change.flat { background:#F1F5F9; color:#64748B; }
+.section { margin-bottom:24px; }
+.section-title { font-size:18px; font-weight:700; margin-bottom:16px; display:flex; align-items:center; gap:8px; }
+.section-title .icon { width:32px; height:32px; border-radius:8px; display:flex; align-items:center; justify-content:center; font-size:16px; }
+.section-title .icon.ig { background:linear-gradient(135deg,#E1306C,#F77737); color:white; }
+.section-title .icon.tt { background:#000; color:white; }
+.section-title .icon.vs { background:#1E293B; color:white; }
+.section-title .icon.alert { background:#EF4444; color:white; }
+.section-title .icon.sales { background:linear-gradient(135deg,#3B82F6,#2563EB); color:white; }
+.section-title .icon.premium { background:linear-gradient(135deg,#10B981,#059669); color:white; }
+.section-title .icon.funnel { background:linear-gradient(135deg,#6366F1,#4F46E5); color:white; }
+.section-title .icon.konten { background:linear-gradient(135deg,#6366F1,#4F46E5); color:white; }
+.section-title .icon.target { background:linear-gradient(135deg,#EF4444,#DC2626); color:white; }
+.section-title .icon.komp { background:linear-gradient(135deg,#1E293B,#334155); color:white; }
+.section-title .icon.action { background:linear-gradient(135deg,#3B82F6,#EF4444); color:white; }
+.chart-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(450px,1fr)); gap:20px; margin-bottom:24px; }
+.chart-card { background:white; border-radius:12px; padding:24px; box-shadow:0 1px 3px rgba(0,0,0,0.08); }
+.chart-card h3 { font-size:15px; font-weight:600; margin-bottom:16px; color:#334155; }
+.chart-card .chart-wrap { position:relative; height:320px; }
+.chart-full { background:white; border-radius:12px; padding:24px; box-shadow:0 1px 3px rgba(0,0,0,0.08); margin-bottom:24px; }
+.chart-full h3 { font-size:15px; font-weight:600; margin-bottom:16px; color:#334155; }
+.chart-full .chart-wrap { position:relative; height:380px; }
+.table-card { background:white; border-radius:12px; padding:24px; box-shadow:0 1px 3px rgba(0,0,0,0.08); overflow-x:auto; margin-bottom:24px; }
+.table-card h3 { font-size:15px; font-weight:600; margin-bottom:16px; color:#334155; }
+table { width:100%; border-collapse:collapse; font-size:13px; }
+th { background:#F8FAFC; padding:10px 12px; text-align:left; font-weight:600; color:#475569; border-bottom:2px solid #E2E8F0; white-space:nowrap; }
+td { padding:10px 12px; border-bottom:1px solid #F1F5F9; white-space:nowrap; }
+tr:hover td { background:#F8FAFC; }
+.highlight-row td { background:#EFF6FF; font-weight:600; }
+.rank-badge { display:inline-flex; align-items:center; justify-content:center; width:24px; height:24px; border-radius:50%; font-size:11px; font-weight:700; }
+.rank-1 { background:#FEF3C7; color:#B45309; }
+.rank-2 { background:#E2E8F0; color:#475569; }
+.rank-3 { background:#FFEDD5; color:#C2410C; }
+.rank-4,.rank-5,.rank-6,.rank-7 { background:#F1F5F9; color:#64748B; }
+.tag { display:inline-block; padding:2px 8px; border-radius:4px; font-size:11px; font-weight:600; }
+.tag-green { background:#D1FAE5; color:#059669; }
+.tag-red { background:#FEE2E2; color:#DC2626; }
+.tag-yellow { background:#FEF3C7; color:#B45309; }
+.tag-blue { background:#DBEAFE; color:#2563EB; }
+.tag-orange { background:#FFEDD5; color:#C2410C; }
+.tag-pink { background:#FCE7F3; color:#BE185D; }
+.insight-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); gap:16px; margin-bottom:24px; }
+.insight-card { background:white; border-radius:12px; padding:20px; box-shadow:0 1px 3px rgba(0,0,0,0.08); border-left:4px solid; }
+.insight-card.danger { border-color:#EF4444; }
+.insight-card.warning { border-color:#F59E0B; }
+.insight-card.success { border-color:#10B981; }
+.insight-card.info { border-color:#3B82F6; }
+.insight-card h4 { font-size:14px; font-weight:700; margin-bottom:6px; }
+.insight-card p { font-size:13px; color:#475569; }
+.insight-card .metric { font-size:20px; font-weight:700; margin:8px 0; }
+.insight-card .metric.red { color:#EF4444; }
+.insight-card .metric.green { color:#10B981; }
+.insight-card .metric.yellow { color:#F59E0B; }
+.footer { text-align:center; padding:24px; color:#94A3B8; font-size:12px; }
+.footer a { color:#3B82F6; text-decoration:none; }
+.source-note { background:#F8FAFC; border:1px solid #E2E8F0; border-radius:8px; padding:12px 16px; font-size:11px; color:#64748B; margin-bottom:24px; }
+.source-note strong { color:#475569; }
+.action-card { background:white; border-radius:12px; padding:20px; box-shadow:0 1px 3px rgba(0,0,0,0.08); border-left:4px solid #3B82F6; margin-bottom:12px; }
+.action-card.sa { border-left-color:#10B981; }
+.action-card h4 { font-size:14px; font-weight:700; margin-bottom:4px; }
+.action-card p { font-size:13px; color:#475569; }
+.action-card .pri { display:inline-block; padding:2px 8px; border-radius:4px; font-size:11px; font-weight:700; margin-bottom:8px; }
+.action-card .pri.h { background:#FEE2E2; color:#DC2626; }
+.action-card .pri.m { background:#FEF3C7; color:#B45309; }
+.action-card .pri.l { background:#F1F5F9; color:#64748B; }
+.target-card { background:white; border-radius:12px; padding:24px; box-shadow:0 1px 3px rgba(0,0,0,0.08); margin-bottom:16px; }
+.target-card h4 { font-size:14px; font-weight:700; margin-bottom:12px; }
+.progress-bar-bg { height:24px; background:#F1F5F9; border-radius:12px; overflow:hidden; margin-bottom:8px; }
+.progress-bar-fill { height:100%; border-radius:12px; display:flex; align-items:center; justify-content:center; color:white; font-size:11px; font-weight:700; min-width:40px; }
+.tab-nav { display:flex; gap:6px; margin-bottom:24px; background:white; border-radius:12px; padding:6px; box-shadow:0 1px 3px rgba(0,0,0,0.08); flex-wrap:wrap; position:sticky; top:0; z-index:100; }
+.tab-btn { padding:10px 20px; border-radius:8px; border:none; background:transparent; font-size:14px; font-weight:600; color:#64748B; cursor:pointer; transition:all 0.2s; display:flex; align-items:center; gap:6px; white-space:nowrap; }
+.tab-btn:hover { background:#EFF6FF; color:#334155; }
+.tab-btn.active { background:#3B82F6; color:white; box-shadow:0 2px 8px rgba(59,130,246,0.3); }
+.tab-page { display:block; }
+.tab-page.hidden { display:none; }
+@media(max-width:768px) { .chart-grid { grid-template-columns:1fr; } .kpi-row { grid-template-columns:repeat(2,1fr); } .header h1 { font-size:20px; } .tab-btn { padding:8px 12px; font-size:12px; } }
+</style>
+</head>
+<body>
+<div class="dashboard">
+
+<div class="header">
+  <div>
+    <h1>&#128737; Dashboard Marketing &amp; Sales JadiPolisi</h1>
+    <div class="subtitle">Bimbel Online POLRI No.1 — Analisis Periode Juni 2026</div>
+  </div>
+  <div style="text-align:right">
+    <div class="badge">Sales Juni 2026<br><strong>Rp221Jt</strong> (100% target)</div>
+    <div class="badge" style="margin-top:8px">User Premium<br><strong>1.988 users</strong> (89,9% target)</div>
+  </div>
+</div>
+<div class="tab-nav">
+  <button class="tab-btn active" data-tab="marketing" onclick="showTab('marketing')"><span style="background:linear-gradient(135deg,#E1306C,#F77737);color:white;width:22px;height:22px;border-radius:6px;display:inline-flex;align-items:center;justify-content:center;font-size:11px;font-weight:700">IG</span> Marketing</button>
+  <button class="tab-btn" data-tab="sales" onclick="showTab('sales')"><span style="background:linear-gradient(135deg,#3B82F6,#2563EB);color:white;width:22px;height:22px;border-radius:6px;display:inline-flex;align-items:center;justify-content:center;font-size:11px;font-weight:700">$</span> Sales & Target</button>
+  <button class="tab-btn" data-tab="kompetitor" onclick="showTab('kompetitor')"><span style="background:linear-gradient(135deg,#1E293B,#334155);color:white;width:22px;height:22px;border-radius:6px;display:inline-flex;align-items:center;justify-content:center;font-size:11px;font-weight:700">VS</span> Kompetitor</button>
+  <button class="tab-btn" data-tab="konten" onclick="showTab('konten')"><span style="background:linear-gradient(135deg,#6366F1,#4F46E5);color:white;width:22px;height:22px;border-radius:6px;display:inline-flex;align-items:center;justify-content:center;font-size:11px;font-weight:700">&#9998;</span> Strategi Konten</button>
+  <button class="tab-btn" data-tab="actionplan" onclick="showTab('actionplan')"><span style="background:linear-gradient(135deg,#3B82F6,#EF4444);color:white;width:22px;height:22px;border-radius:6px;display:inline-flex;align-items:center;justify-content:center;font-size:11px;font-weight:700">&#9889;</span> Action Plan</button>
+  <button class="tab-btn" data-tab="semua" onclick="showTab('semua')"><span style="background:#10B981;color:white;width:22px;height:22px;border-radius:6px;display:inline-flex;align-items:center;justify-content:center;font-size:11px;font-weight:700">&#8734;</span> Semua</button>
+</div>
+<div class="tab-page" id="tab-marketing">
+<div class="source-note"><strong>Sumber:</strong> SocialBlade.com (Juni 2026) — @jadipolisi.id (IG &amp; TikTok) + 6 kompetitor bimbel Polri.</div>
+
+<div class="section">
+<div class="section-title"><div class="icon ig">&#128247;</div> Instagram @jadipolisi.id</div>
+<div class="kpi-row">
+  <div class="kpi-card ig"><div class="kpi-label">Followers</div><div class="kpi-value">203.951</div><div class="kpi-sub"><span class="kpi-change down">&#9660; -1.134 (14 hari)</span></div></div>
+  <div class="kpi-card orange"><div class="kpi-label">Engagement Rate</div><div class="kpi-value">0,16%</div><div class="kpi-sub">Rank #5 dari 7 akun</div></div>
+  <div class="kpi-card blue"><div class="kpi-label">Avg Likes</div><div class="kpi-value">330</div><div class="kpi-sub">Avg Comments: 1,9</div></div>
+  <div class="kpi-card purple"><div class="kpi-label">Total Posts</div><div class="kpi-value">9.248</div><div class="kpi-sub">Konten library besar</div></div>
+  <div class="kpi-card red"><div class="kpi-label">Daily Growth</div><div class="kpi-value">-81/hari</div><div class="kpi-sub"><span class="kpi-change down">Losing followers tiap hari</span></div></div>
+  <div class="kpi-card green"><div class="kpi-label">Downloader Juni</div><div class="kpi-value">9.662</div><div class="kpi-sub">Target: 14.735 (65,6%)</div></div>
+</div></div>
+
+<div class="section">
+<div class="section-title"><div class="icon tt">&#9835;</div> TikTok @jadipolisi.id — <span style="color:#EF4444;font-size:14px">DECLINING</span></div>
+<div class="kpi-row">
+  <div class="kpi-card tt"><div class="kpi-label">Followers</div><div class="kpi-value">335.100</div><div class="kpi-sub"><span class="kpi-change down">&#9660; -1.500 (14 hari)</span></div></div>
+  <div class="kpi-card green"><div class="kpi-label">Total Likes</div><div class="kpi-value">12.900.000</div><div class="kpi-sub">Engagement TikTok sangat tinggi</div></div>
+  <div class="kpi-card blue"><div class="kpi-label">Total Videos</div><div class="kpi-value">7.247</div><div class="kpi-sub">Content machine — volume sangat besar</div></div>
+  <div class="kpi-card red"><div class="kpi-label">Daily Growth TT</div><div class="kpi-value">-107/hari</div><div class="kpi-sub"><span class="kpi-change down">Losing followers TikTok juga</span></div></div>
+</div></div>
+
+<div class="section">
+<div class="section-title"><div class="icon vs">&#127760;</div> Total Reach — All Platform</div>
+<div class="kpi-row">
+  <div class="kpi-card gold"><div class="kpi-label">Total Reach (All Platform)</div><div class="kpi-value">539K</div><div class="kpi-sub">IG 204K + TikTok 335K</div></div>
+  <div class="kpi-card green"><div class="kpi-label">Ranking vs Kompetitor</div><div class="kpi-value">#1 Total Reach</div><div class="kpi-sub">Terbesar di niche bimbel Polri</div></div>
+  <div class="kpi-card tt"><div class="kpi-label">TikTok Likes/Follower Ratio</div><div class="kpi-value">38,5x</div><div class="kpi-sub">Sangat tinggi — 12,9M / 335K</div></div>
+  <div class="kpi-card emerald"><div class="kpi-label">App Downloads</div><div class="kpi-value">190.000+</div><div class="kpi-sub">Rating 4,7 &#9733; (835 reviews)</div></div>
+</div></div>
+
+<div class="section">
+<div class="section-title"><div class="icon alert">&#128680;</div> Temuan Kritis — 6 Insight Utama</div>
+<div class="insight-grid">
+  <div class="insight-card danger"><h4>&#9660; IG &amp; TikTok Keduanya Declining</h4><div class="metric red">-2.634 total (14 hari)</div><p>IG kehilangan 1.134 followers + TikTok kehilangan 1.500 followers dalam 14 hari. Kedua platform utama sedang declining bersamaan — sinyal alarm serius.</p></div>
+  <div class="insight-card success"><h4>&#127942; Sales Target 100% Tercapai!</h4><div class="metric green">Rp221Jt = 100%</div><p>Revenue Juni tepat di target Rp221Jt. User Premium 1.988 (89,9%) dan konversi 20,58% vs target 15% — sangat baik. Revenue aman meskipun follower turun.</p></div>
+  <div class="insight-card danger"><h4>&#9888; Engagement IG Terendah</h4><div class="metric red">0,16% — #5 dari 7</div><p>Engagement rate paling rendah kedua dari 7 akun. @kelasbimbelofficial punya 11,57% (72x lebih tinggi!) dan @bimbelpolri.tacticalinpolice punya 2,95%.</p></div>
+  <div class="insight-card warning"><h4>&#128202; TikTok Likes Stagnan</h4><div class="metric yellow">12,9M — Flat 14 Hari</div><p>Total likes flat di 12,9M selama 14 hari meski tetap posting tiap hari. Reach dan virality menurun, konten tidak lagi mendapat distribusi algoritmik yang optimal.</p></div>
+  <div class="insight-card success"><h4>&#128176; Konversi Sangat Tinggi</h4><div class="metric green">20,58% vs Target 15%</div><p>Konversi 137% dari target! Downloader yang masuk memiliki intent beli tinggi. Problem bukan konversi tapi volume traffic/downloader yang baru 65,6% target.</p></div>
+  <div class="insight-card info"><h4>&#128640; Kompetitor @bintangbangsa.id Naik</h4><div class="metric" style="color:#3B82F6">+1.730 (14 hari)</div><p>Satu-satunya kompetitor besar yang GROWING (+124/hari). Dengan 153K IG + 96,8K TikTok, mereka menjadi ancaman serius yang harus dipantau.</p></div>
+</div></div>
+
+<div class="chart-grid">
+  <div class="chart-card"><h3>&#128200; Trend Followers IG @jadipolisi.id (14 Hari)</h3><div class="chart-wrap"><canvas id="chFollower14"></canvas></div></div>
+  <div class="chart-card"><h3>&#128200; Trend Followers TikTok @jadipolisi.id (14 Hari)</h3><div class="chart-wrap"><canvas id="chTTFollower"></canvas></div></div>
+</div>
+<div class="chart-grid">
+  <div class="chart-card"><h3>&#128202; IG vs TikTok — Followers Comparison</h3><div class="chart-wrap"><canvas id="chIGvsTT"></canvas></div></div>
+  <div class="chart-card"><h3>&#128202; IG vs TikTok — Engagement Comparison</h3><div class="chart-wrap"><canvas id="chEngComp"></canvas></div></div>
+</div>
+
+<div class="section">
+<div class="section-title"><div class="icon tt">&#128202;</div> Platform Comparison: IG vs TikTok @jadipolisi.id</div>
+<div class="table-card">
+<table>
+<thead><tr><th>Metric</th><th>Instagram</th><th>TikTok</th><th>Winner</th></tr></thead>
+<tbody>
+<tr><td><strong>Followers</strong></td><td>203.951</td><td>335.100</td><td><span class="tag tag-blue">TikTok</span></td></tr>
+<tr><td><strong>Total Likes</strong></td><td>~330/post avg</td><td>12.900.000 total</td><td><span class="tag tag-blue">TikTok</span></td></tr>
+<tr><td><strong>Engagement</strong></td><td>0,16%</td><td>High (~38,5x ratio)</td><td><span class="tag tag-blue">TikTok</span></td></tr>
+<tr><td><strong>Growth (14d)</strong></td><td style="color:#DC2626">-1.134</td><td style="color:#DC2626">-1.500</td><td><span class="tag tag-red">Dua-duanya Turun</span></td></tr>
+<tr><td><strong>Content Volume</strong></td><td>9.248 posts</td><td>7.247 videos</td><td><span class="tag tag-pink">IG</span></td></tr>
+<tr><td><strong>Status</strong></td><td><span class="tag tag-red">Declining</span></td><td><span class="tag tag-red">Declining</span></td><td><span class="tag tag-red">Keduanya Turun</span></td></tr>
+</tbody></table></div></div>
+
+<div class="section">
+<div class="section-title"><div class="icon alert">&#128201;</div> Marketing Health Score</div>
+<div class="chart-grid">
+  <div class="chart-card"><h3>&#128202; Health Score Radar — 6 Dimensi</h3><div class="chart-wrap"><canvas id="chHealthRadar"></canvas></div></div>
+  <div class="chart-card"><h3>&#128200; Target Achievement Juni 2026</h3><div class="chart-wrap"><canvas id="chTargetBar"></canvas></div></div>
+</div>
+<div class="kpi-row">
+  <div class="kpi-card green"><div class="kpi-label">Reach</div><div class="kpi-value">80/100</div><div class="kpi-sub">539K combined reach, #1 niche</div></div>
+  <div class="kpi-card red"><div class="kpi-label">Engagement</div><div class="kpi-value">20/100</div><div class="kpi-sub">0,16% sangat rendah</div></div>
+  <div class="kpi-card red"><div class="kpi-label">Growth</div><div class="kpi-value">15/100</div><div class="kpi-sub">Declining di kedua platform</div></div>
+  <div class="kpi-card orange"><div class="kpi-label">Content Quality</div><div class="kpi-value">40/100</div><div class="kpi-sub">Volume tinggi, engagement rendah</div></div>
+  <div class="kpi-card green"><div class="kpi-label">Monetization</div><div class="kpi-value">90/100</div><div class="kpi-sub">Sales 100%, konversi 20,58%</div></div>
+  <div class="kpi-card emerald"><div class="kpi-label">App Ecosystem</div><div class="kpi-value">75/100</div><div class="kpi-sub">190K downloads, 4,7 &#9733;</div></div>
+</div></div>
+
+<div class="table-card">
+<h3>&#128202; SocialBlade Daily @jadipolisi.id IG (14 Hari)</h3>
+<table>
+<thead><tr><th>Tanggal</th><th>Followers</th><th>Change</th><th>Status</th></tr></thead>
+<tbody>
+<tr><td>Jun 12</td><td>205.085</td><td style="color:#DC2626">-85</td><td><span class="tag tag-red">&#9660; Turun</span></td></tr>
+<tr><td>Jun 13</td><td>205.013</td><td style="color:#DC2626">-72</td><td><span class="tag tag-red">&#9660; Turun</span></td></tr>
+<tr><td>Jun 14</td><td>204.950</td><td style="color:#DC2626">-63</td><td><span class="tag tag-red">&#9660; Turun</span></td></tr>
+<tr><td>Jun 15</td><td>204.895</td><td style="color:#DC2626">-55</td><td><span class="tag tag-red">&#9660; Turun</span></td></tr>
+<tr><td>Jun 16</td><td>204.817</td><td style="color:#DC2626">-78</td><td><span class="tag tag-red">&#9660; Turun</span></td></tr>
+<tr><td>Jun 17</td><td>204.725</td><td style="color:#DC2626">-92</td><td><span class="tag tag-red">&#9660; Turun</span></td></tr>
+<tr><td>Jun 18</td><td>204.657</td><td style="color:#DC2626">-68</td><td><span class="tag tag-red">&#9660; Turun</span></td></tr>
+<tr><td>Jun 19</td><td>204.569</td><td style="color:#DC2626">-88</td><td><span class="tag tag-red">&#9660; Turun</span></td></tr>
+<tr><td>Jun 20</td><td>204.474</td><td style="color:#DC2626">-95</td><td><span class="tag tag-red">&#9660; Turun</span></td></tr>
+<tr><td>Jun 21</td><td>204.402</td><td style="color:#DC2626">-72</td><td><span class="tag tag-red">&#9660; Turun</span></td></tr>
+<tr><td>Jun 22</td><td>204.292</td><td style="color:#DC2626">-110</td><td><span class="tag tag-red">&#9660; Turun</span></td></tr>
+<tr><td>Jun 23</td><td>204.194</td><td style="color:#DC2626">-98</td><td><span class="tag tag-red">&#9660; Turun</span></td></tr>
+<tr><td>Jun 24</td><td>204.086</td><td style="color:#DC2626">-108</td><td><span class="tag tag-red">&#9660; Turun</span></td></tr>
+<tr><td>Jun 25</td><td>203.951</td><td style="color:#DC2626">-135</td><td><span class="tag tag-red">&#9660; Turun</span></td></tr>
+<tr class="highlight-row"><td><strong>Total</strong></td><td></td><td style="color:#DC2626"><strong>-1.134</strong></td><td><span class="tag tag-red">DECLINING</span></td></tr>
+</tbody></table></div>
+</div>
+<div class="tab-page hidden" id="tab-sales">
+<div class="source-note"><strong>Sumber:</strong> Centil Analytics (Juni 2026) — Target vs Achievement JadiPolisi.</div>
+
+<div class="section">
+<div class="section-title"><div class="icon sales">&#128176;</div> Target vs Achievement — Juni 2026</div>
+<div class="kpi-row">
+  <div class="kpi-card green"><div class="kpi-label">Sales Revenue</div><div class="kpi-value">Rp221Jt</div><div class="kpi-sub"><span class="kpi-change up">&#9650; 100% TARGET TERCAPAI!</span></div></div>
+  <div class="kpi-card emerald"><div class="kpi-label">User Premium</div><div class="kpi-value">1.988</div><div class="kpi-sub"><span class="kpi-change up">&#9650; 89,95% dari target 2.210</span></div></div>
+  <div class="kpi-card orange"><div class="kpi-label">Downloader</div><div class="kpi-value">9.662</div><div class="kpi-sub"><span class="kpi-change down">&#9660; 65,57% dari target 14.735</span></div></div>
+  <div class="kpi-card green"><div class="kpi-label">Konversi</div><div class="kpi-value">20,58%</div><div class="kpi-sub"><span class="kpi-change up">&#9650; 137% dari target 15%</span></div></div>
+  <div class="kpi-card blue"><div class="kpi-label">Rata-Rata Harga</div><div class="kpi-value">Rp111.178</div><div class="kpi-sub">Target: Rp100.000 &#10004;</div></div>
+  <div class="kpi-card gold"><div class="kpi-label">Revenue Harian</div><div class="kpi-value">Rp7,37Jt/hari</div><div class="kpi-sub">Avg daily revenue Juni</div></div>
+</div></div>
+<div class="section"><div class="section-title"><div class="icon target">&#127919;</div> Progress Target Juni 2026</div>
+<div class="target-card">
+  <h4>Downloader (Signups) <span class="tag tag-yellow">WARNING</span></h4>
+  <div class="progress-bar-bg"><div class="progress-bar-fill" style="width:65.57%;background:#F97316">65.6%</div></div>
+  <div style="display:flex;justify-content:space-between;font-size:12px;color:#64748B"><span>9.662 / 14.735</span><span>65.6% achieved | Harian: 491</span></div>
+</div>
+<div class="target-card">
+  <h4>User Premium <span class="tag tag-yellow">ON TRACK</span></h4>
+  <div class="progress-bar-bg"><div class="progress-bar-fill" style="width:89.95%;background:#10B981">90.0%</div></div>
+  <div style="display:flex;justify-content:space-between;font-size:12px;color:#64748B"><span>1.988 / 2.210</span><span>90.0% achieved | Harian: 74</span></div>
+</div>
+<div class="target-card">
+  <h4>Sales Revenue <span class="tag tag-green">SUCCESS</span></h4>
+  <div class="progress-bar-bg"><div class="progress-bar-fill" style="width:100.0%;background:#3B82F6">100.0%</div></div>
+  <div style="display:flex;justify-content:space-between;font-size:12px;color:#64748B"><span>Rp221Jt / Rp221Jt</span><span>100.0% achieved | Harian: 7.367.412</span></div>
+</div>
+<div class="target-card">
+  <h4>Konversi <span class="tag tag-green">EXCEEDED</span></h4>
+  <div class="progress-bar-bg"><div class="progress-bar-fill" style="width:100%;background:#10B981">137.2%</div></div>
+  <div style="display:flex;justify-content:space-between;font-size:12px;color:#64748B"><span>20,58% / 15%</span><span>137.2% achieved</span></div>
+</div>
+<div class="target-card">
+  <h4>Rata-Rata Harga <span class="tag tag-green">EXCEEDED</span></h4>
+  <div class="progress-bar-bg"><div class="progress-bar-fill" style="width:100%;background:#10B981">111.2%</div></div>
+  <div style="display:flex;justify-content:space-between;font-size:12px;color:#64748B"><span>Rp111.178 / Rp100.000</span><span>111.2% achieved</span></div>
+</div>
+</div>
+<div class="section">
+<div class="section-title"><div class="icon funnel">&#128202;</div> Conversion Funnel Juni 2026</div>
+<div class="table-card">
+<table>
+<thead><tr><th>Stage</th><th>Jumlah</th><th>% dari Downloader</th><th>Conversion Rate</th></tr></thead>
+<tbody>
+<tr><td><strong>Downloader (Signups)</strong></td><td>9.662</td><td>100%</td><td>—</td></tr>
+<tr><td><strong>User Premium (Baru)</strong></td><td>1.988</td><td>20,58%</td><td><span class="tag tag-green">20,58% &#9650;</span></td></tr>
+<tr><td><strong>Revenue</strong></td><td>Rp221.022.360</td><td>—</td><td><span class="tag tag-green">100% Target</span></td></tr>
+</tbody></table></div></div>
+
+<div class="section">
+<div class="section-title"><div class="icon premium">&#128179;</div> Produk &amp; Pricing JadiPolisi</div>
+<div class="table-card">
+<table>
+<thead><tr><th>Paket</th><th>Harga Normal</th><th>Harga Promo</th><th>Durasi</th><th>Jalur</th></tr></thead>
+<tbody>
+<tr><td><strong>Super Intensif 3 Bulan</strong></td><td>Rp250.000</td><td style="color:#059669;font-weight:700">Rp119.000</td><td>3 bulan</td><td>Bintara/AKPOL/Tamtama</td></tr>
+<tr><td><strong>Super Intensif 6 Bulan</strong></td><td>Rp300.000</td><td style="color:#059669;font-weight:700">Rp139.000</td><td>6 bulan</td><td>Bintara/AKPOL/Tamtama</td></tr>
+<tr><td><strong>Curi Start 1 Tahun</strong></td><td>Rp400.000</td><td style="color:#059669;font-weight:700">Rp169.000</td><td>1 tahun</td><td>Bintara/AKPOL/Tamtama</td></tr>
+<tr><td><strong>SIPSS CAMP ALL IN</strong></td><td>Rp400.000</td><td style="color:#059669;font-weight:700">Rp175.000</td><td>2 bulan</td><td>SIPSS</td></tr>
+<tr class="highlight-row"><td><strong>Bimbingan Eksklusif (x Gantar Velocity)</strong></td><td>Rp1.000.000</td><td style="color:#059669;font-weight:700">Rp650.000</td><td>3 bulan</td><td>Premium Collab</td></tr>
+</tbody></table></div></div>
+
+<div class="chart-grid">
+  <div class="chart-card"><h3>&#128202; Target Achievement Radar</h3><div class="chart-wrap"><canvas id="chTargetRadar"></canvas></div></div>
+  <div class="chart-card"><h3>&#128200; Funnel Conversion Visual</h3><div class="chart-wrap"><canvas id="chFunnel"></canvas></div></div>
+</div>
+</div>
+<div class="tab-page hidden" id="tab-kompetitor">
+<div class="source-note"><strong>Sumber:</strong> SocialBlade.com (Juni 2026) — 7 akun bimbel Polri/TNI/Kedinasan termasuk JadiPolisi.</div>
+
+<div class="section">
+<div class="section-title"><div class="icon komp">VS</div> Ranking Instagram — Bimbel Polri Niche</div>
+<div class="table-card">
+<h3>&#128202; Perbandingan 7 Akun IG Bimbel Polri/TNI (Juni 2026)</h3>
+<table>
+<thead><tr><th>#</th><th>Akun</th><th>Followers</th><th>ER</th><th>Avg Likes</th><th>Avg Comments</th><th>Posts</th><th>Growth 14d</th><th>Status</th></tr></thead>
+<tbody>
+<tr class="highlight-row"><td><span class="rank-badge rank-1">1</span></td><td><strong>@jadipolisi.id</strong></td><td><strong>203.951</strong></td><td>0,16%</td><td>330</td><td>1,9</td><td>9.248</td><td style="color:#DC2626">-1.134</td><td><span class="tag tag-red">Declining</span></td></tr>
+<tr><td><span class="rank-badge rank-2">2</span></td><td>@casispolriid</td><td>166.825</td><td>0,04%</td><td>71</td><td>2,3</td><td>4.698</td><td style="color:#DC2626">-461</td><td><span class="tag tag-red">Declining</span></td></tr>
+<tr><td><span class="rank-badge rank-3">3</span></td><td>@bintangbangsa.id</td><td>153.924</td><td>0,20%</td><td>293</td><td>10,9</td><td>1.993</td><td style="color:#059669">+1.730</td><td><span class="tag tag-green">GROWING</span></td></tr>
+<tr><td><span class="rank-badge rank-4">4</span></td><td>@bimbel.generasiandalan.id</td><td>90.790</td><td>0,11%</td><td>98</td><td>0,5</td><td>2.211</td><td style="color:#DC2626">-16</td><td><span class="tag tag-yellow">Flat</span></td></tr>
+<tr><td><span class="rank-badge rank-5">5</span></td><td>@aptaschool_polri</td><td>87.253</td><td>0,05%</td><td>46</td><td>0,4</td><td>3.816</td><td style="color:#DC2626">-158</td><td><span class="tag tag-red">Declining</span></td></tr>
+<tr><td><span class="rank-badge rank-6">6</span></td><td>@bimbelpolri.tacticalinpolice</td><td>58.959</td><td style="color:#059669;font-weight:700">2,95%</td><td style="color:#059669;font-weight:700">1.735</td><td>3,9</td><td>1.433</td><td style="color:#DC2626">-263</td><td><span class="tag tag-red">Declining</span></td></tr>
+<tr><td><span class="rank-badge rank-7">7</span></td><td>@kelasbimbelofficial</td><td>20.081</td><td style="color:#059669;font-weight:700">11,57%</td><td style="color:#059669;font-weight:700">2.279</td><td>44,9</td><td>1.057</td><td style="color:#059669">+82</td><td><span class="tag tag-green">Growing</span></td></tr>
+</tbody></table></div></div>
+
+<div class="chart-grid">
+  <div class="chart-card"><h3>&#128202; Followers Comparison — IG Bimbel Polri</h3><div class="chart-wrap"><canvas id="chKompF"></canvas></div></div>
+  <div class="chart-card"><h3>&#128202; Engagement Rate Comparison</h3><div class="chart-wrap"><canvas id="chKompE"></canvas></div></div>
+</div>
+<div class="chart-grid">
+  <div class="chart-card"><h3>&#128200; Growth 14 Hari — Siapa yang Naik?</h3><div class="chart-wrap"><canvas id="chKompG"></canvas></div></div>
+  <div class="chart-card"><h3>&#128202; Avg Likes per Post — Quality Content</h3><div class="chart-wrap"><canvas id="chKompL"></canvas></div></div>
+</div>
+
+<div class="section">
+<div class="section-title"><div class="icon tt">&#9835;</div> TikTok Comparison — Bimbel Polri</div>
+<div class="table-card">
+<h3>&#128202; Perbandingan TikTok — 4 Akun yang Terdeteksi SocialBlade</h3>
+<table>
+<thead><tr><th>#</th><th>Akun</th><th>Followers</th><th>Total Likes</th><th>Videos</th><th>Likes/Follower</th><th>Status</th></tr></thead>
+<tbody>
+<tr class="highlight-row"><td><span class="rank-badge rank-1">1</span></td><td><strong>@jadipolisi.id</strong></td><td><strong>335.100</strong></td><td><strong>12.900.000</strong></td><td>7.247</td><td>38,5x</td><td><span class="tag tag-red">Declining</span></td></tr>
+<tr><td><span class="rank-badge rank-2">2</span></td><td>@bintangbangsa.id</td><td>96.800</td><td>4.100.000</td><td>1.063</td><td>42,4x</td><td><span class="tag tag-yellow">Baru di SB</span></td></tr>
+<tr><td><span class="rank-badge rank-3">3</span></td><td>@casispolriid</td><td>34.800</td><td>1.000.000</td><td>1.594</td><td>28,7x</td><td><span class="tag tag-yellow">Stagnan</span></td></tr>
+<tr><td><span class="rank-badge rank-4">4</span></td><td>@aptaschool_polri</td><td>2.857</td><td>114.700</td><td>1.085</td><td>40,1x</td><td><span class="tag tag-yellow">Baru di SB</span></td></tr>
+</tbody></table></div></div>
+
+<div class="section">
+<div class="section-title"><div class="icon alert">&#128161;</div> Analisis Kompetitor — Key Takeaways</div>
+<div class="insight-grid">
+  <div class="insight-card danger"><h4>&#9888; @bintangbangsa.id = Ancaman Utama</h4><div class="metric red">+1.730 (14d) &amp; GROWING</div><p>Satu-satunya kompetitor besar yang konsisten tumbuh. IG 153K (+124/hari) + TikTok 96,8K. Hanya buat 1.993 posts (vs 9.248 JadiPolisi) tapi lebih efektif. Quality over quantity.</p></div>
+  <div class="insight-card warning"><h4>&#128293; @kelasbimbelofficial = Engagement King</h4><div class="metric yellow">11,57% ER — 72x JadiPolisi!</div><p>Meski paling kecil (20K), engagement rate 11,57% menunjukkan konten sangat resonan. 2.279 avg likes di 20K followers vs 330 di 204K JadiPolisi. Mereka tahu cara buat konten viral.</p></div>
+  <div class="insight-card info"><h4>&#128202; @tacticalinpolice = High Likes</h4><div class="metric" style="color:#3B82F6">1.735 avg likes (2,95% ER)</div><p>Meski turun, avg likes 1.735 sangat tinggi untuk 59K followers. Kemungkinan viral Reels atau konten fisik test yang memancing engagement. Strategi konten perlu di-benchmark.</p></div>
+  <div class="insight-card success"><h4>&#127942; JadiPolisi Dominasi TikTok</h4><div class="metric green">335K — 3,5x runner-up</div><p>Di TikTok, JadiPolisi 335K vs bintangbangsa 96,8K (3,5x lebih besar). 12,9M total likes dan 7.247 videos. Moat yang kuat tapi perlu pertahankan dari decline.</p></div>
+</div></div>
+
+<div class="section">
+<div class="section-title"><div class="icon komp">&#128202;</div> SocialBlade Daily @bintangbangsa.id (14 Hari) — Kompetitor Tumbuh</div>
+<div class="table-card">
+<table>
+<thead><tr><th>Tanggal</th><th>Followers</th><th>Change</th><th>Status</th></tr></thead>
+<tbody>
+<tr><td>Jun 11</td><td>152.194</td><td style="color:#059669">+49</td><td><span class="tag tag-green">&#9650; Naik</span></td></tr>
+<tr><td>Jun 12</td><td>152.251</td><td style="color:#059669">+57</td><td><span class="tag tag-green">&#9650; Naik</span></td></tr>
+<tr><td>Jun 13</td><td>152.324</td><td style="color:#059669">+73</td><td><span class="tag tag-green">&#9650; Naik</span></td></tr>
+<tr><td>Jun 14</td><td>152.388</td><td style="color:#059669">+64</td><td><span class="tag tag-green">&#9650; Naik</span></td></tr>
+<tr><td>Jun 15</td><td>152.502</td><td style="color:#059669">+114</td><td><span class="tag tag-green">&#9650; Naik</span></td></tr>
+<tr><td>Jun 16</td><td>152.680</td><td style="color:#059669">+178</td><td><span class="tag tag-green">&#9650; Naik</span></td></tr>
+<tr><td>Jun 17</td><td>152.803</td><td style="color:#059669">+123</td><td><span class="tag tag-green">&#9650; Naik</span></td></tr>
+<tr><td>Jun 18</td><td>152.922</td><td style="color:#059669">+119</td><td><span class="tag tag-green">&#9650; Naik</span></td></tr>
+<tr><td>Jun 19</td><td>153.031</td><td style="color:#059669">+109</td><td><span class="tag tag-green">&#9650; Naik</span></td></tr>
+<tr><td>Jun 20</td><td>153.225</td><td style="color:#059669">+194</td><td><span class="tag tag-green">&#9650; Naik</span></td></tr>
+<tr><td>Jun 21</td><td>153.411</td><td style="color:#059669">+186</td><td><span class="tag tag-green">&#9650; Naik</span></td></tr>
+<tr><td>Jun 22</td><td>153.559</td><td style="color:#059669">+148</td><td><span class="tag tag-green">&#9650; Naik</span></td></tr>
+<tr><td>Jun 23</td><td>153.713</td><td style="color:#059669">+154</td><td><span class="tag tag-green">&#9650; Naik</span></td></tr>
+<tr><td>Jun 24</td><td>153.924</td><td style="color:#059669">+211</td><td><span class="tag tag-green">&#9650; Naik</span></td></tr>
+<tr class="highlight-row"><td><strong>Total</strong></td><td></td><td style="color:#059669"><strong>+1.730</strong></td><td><span class="tag tag-green">GROWING</span></td></tr>
+</tbody></table></div></div>
+</div>
+<div class="tab-page hidden" id="tab-konten">
+<div class="source-note"><strong>Sumber:</strong> Analisis konten JadiPolisi berdasarkan SocialBlade metrics, kompetitor benchmark, dan app.jadipolisi.id.</div>
+
+<div class="section">
+<div class="section-title"><div class="icon konten">&#128221;</div> Content Audit — Overall Score: 52/100 (Grade D+)</div>
+<div class="table-card">
+<table>
+<thead><tr><th>Modul</th><th>Score</th><th>Grade</th><th>Catatan</th><th>Prioritas</th></tr></thead>
+<tbody>
+<tr><td><strong>Hook/Opening</strong></td><td>40/100</td><td><span class="tag tag-red">D</span></td><td>IG engagement 0,16% = hook sangat lemah</td><td><span class="tag tag-red">Critical</span></td></tr>
+<tr><td><strong>Visual Quality</strong></td><td>50/100</td><td><span class="tag tag-red">D</span></td><td>9K+ posts tapi template repetitif</td><td><span class="tag tag-red">High</span></td></tr>
+<tr><td><strong>Storytelling</strong></td><td>45/100</td><td><span class="tag tag-red">D</span></td><td>Terlalu informatif, kurang emotional/aspiratif</td><td><span class="tag tag-red">High</span></td></tr>
+<tr><td><strong>CTA Placement</strong></td><td>70/100</td><td><span class="tag tag-green">B</span></td><td>Konversi 20,58% SANGAT BAIK — CTA sudah efektif</td><td><span class="tag tag-blue">Low</span></td></tr>
+<tr><td><strong>Hashtag Strategy</strong></td><td>55/100</td><td><span class="tag tag-red">D</span></td><td>Perlu #PolriRecruit2026 #AKPOLReady niche ownership</td><td><span class="tag tag-orange">Medium</span></td></tr>
+<tr><td><strong>Caption Copy</strong></td><td>50/100</td><td><span class="tag tag-red">D</span></td><td>Kurang emotional, terlalu template-based</td><td><span class="tag tag-orange">Medium</span></td></tr>
+<tr><td><strong>Posting Consistency</strong></td><td>75/100</td><td><span class="tag tag-green">B</span></td><td>9K+ posts + 7K TT videos = sangat konsisten</td><td><span class="tag tag-blue">Low</span></td></tr>
+<tr><td><strong>TikTok Content</strong></td><td>55/100</td><td><span class="tag tag-red">D</span></td><td>7K videos tapi likes stagnan. Content fatigue.</td><td><span class="tag tag-red">High</span></td></tr>
+<tr class="highlight-row"><td><strong>OVERALL</strong></td><td><strong>52/100</strong></td><td><span class="tag tag-red"><strong>D+</strong></span></td><td><strong>Perlu overhaul konten — fokus hook, storytelling, visual</strong></td><td></td></tr>
+</tbody></table></div></div>
+
+<div class="section">
+<div class="section-title"><div class="icon konten">&#128202;</div> Pilar Konten Bimbel Polri</div>
+<div class="chart-grid">
+  <div class="chart-card"><h3>&#128202; Distribusi Pilar Konten (Rekomendasi)</h3><div class="chart-wrap"><canvas id="chPilar"></canvas></div></div>
+  <div class="chart-card"><h3>&#128202; Content Quality Score per Modul</h3><div class="chart-wrap"><canvas id="chContentScore"></canvas></div></div>
+</div></div>
+
+<div class="section">
+<div class="section-title"><div class="icon konten">&#128221;</div> Pilar Konten Rekomendasi</div>
+<div class="table-card">
+<table>
+<thead><tr><th>Pilar</th><th>% Alokasi</th><th>Tipe Konten</th><th>Platform Fokus</th></tr></thead>
+<tbody>
+<tr><td><strong>Tes Fisik &amp; Kesehatan</strong></td><td>30%</td><td>Tutorial lari, pull-up, push-up, tips lolos rikkes</td><td>TikTok + Reels</td></tr>
+<tr><td><strong>Psikotes &amp; Akademik</strong></td><td>25%</td><td>Tips psikotes, pembahasan soal, strategy TPA</td><td>IG Carousel + TikTok</td></tr>
+<tr><td><strong>Info Rekrutmen Polri</strong></td><td>20%</td><td>Update jadwal, syarat, passing grade, timeline</td><td>IG Feed + Story</td></tr>
+<tr><td><strong>Motivasi &amp; Success Story</strong></td><td>15%</td><td>Cerita alumni lolos, day-in-the-life polisi</td><td>TikTok + Reels</td></tr>
+<tr><td><strong>Promo &amp; CTA</strong></td><td>10%</td><td>Flash sale, countdown, testimonial premium</td><td>Story + Feed</td></tr>
+</tbody></table></div></div>
+
+<div class="section">
+<div class="section-title"><div class="icon alert">&#128161;</div> Benchmark: Kenapa @kelasbimbelofficial Punya 11,57% ER?</div>
+<div class="insight-grid">
+  <div class="insight-card success"><h4>&#128293; Konten Fisik Test = Viral</h4><p>Konten tes fisik (lari, push-up, pull-up) sangat visual dan emotional — orang relate dengan struggle fisik. Format before/after sangat powerful untuk Reels &amp; TikTok.</p></div>
+  <div class="insight-card success"><h4>&#127916; Format Reels &gt; Feed Post</h4><p>Avg likes 2.279 di 20K followers = konten short-video mendominasi. Reels mendapat distribusi algoritmik 3-5x lebih besar dari feed post carousel.</p></div>
+  <div class="insight-card info"><h4>&#128172; High Comment Ratio (44,9)</h4><p>44,9 avg comments menunjukkan konten memicu diskusi/debat. Engagement dua arah (conversation) jauh lebih valuable dari sekedar likes pasif.</p></div>
+  <div class="insight-card warning"><h4>&#128269; Lesson: Kurangi Volume, Naikkan Quality</h4><p>@kelasbimbelofficial hanya 1.057 posts (vs 9.248 JadiPolisi) tapi 72x engagement. Quantity &#8800; Quality. JadiPolisi butuh shift ke fewer, higher-quality posts.</p></div>
+</div></div>
+</div>
+<div class="tab-page hidden" id="tab-actionplan">
+<div class="source-note"><strong>Sumber:</strong> Analisis berdasarkan data SocialBlade, Centil Analytics, dan kompetitor benchmark Juni 2026.</div>
+
+<div class="section">
+<div class="section-title"><div class="icon action">&#9889;</div> Action Plan — Prioritas Tinggi</div>
+<div class="action-card ">
+  <div class="pri h">HIGH</div>
+  <h4>Overhaul Hook &amp; Storytelling IG</h4>
+  <p>Engagement 0,16% = hook gagal. Shift dari informatif ke emotional storytelling. Format: problem-agitate-solve. Benchmark @kelasbimbelofficial yang punya 11,57% ER.</p>
+  <div style="font-size:11px;color:#94A3B8;margin-top:8px">Timeline: Minggu 1-2</div>
+</div>
+<div class="action-card ">
+  <div class="pri h">HIGH</div>
+  <h4>Kurangi Frekuensi, Naikkan Kualitas</h4>
+  <p>Dari 3-4 post/hari ke 1-2 post/hari yang high-quality. 9.248 posts dengan 0,16% ER = content fatigue. Less is more.</p>
+  <div style="font-size:11px;color:#94A3B8;margin-top:8px">Timeline: Minggu 1</div>
+</div>
+<div class="action-card ">
+  <div class="pri h">HIGH</div>
+  <h4>Konten Tes Fisik — Viral Format</h4>
+  <p>Buat seri konten tes fisik (lari 12 menit, pull-up, push-up) format Reels. Ini konten paling viral di niche Polri — @kelasbimbelofficial membuktikannya.</p>
+  <div style="font-size:11px;color:#94A3B8;margin-top:8px">Timeline: Minggu 1-2</div>
+</div>
+<div class="action-card ">
+  <div class="pri h">HIGH</div>
+  <h4>TikTok Content Reset</h4>
+  <p>7.247 videos tapi likes stagnan. Butuh format baru: duet reaction, mini vlog, challenge format. Berhenti posting repetitif, fokus viral hooks.</p>
+  <div style="font-size:11px;color:#94A3B8;margin-top:8px">Timeline: Minggu 2-3</div>
+</div>
+<div class="action-card ">
+  <div class="pri h">HIGH</div>
+  <h4>Counter @bintangbangsa.id Growth</h4>
+  <p>Kompetitor ini +124/hari dan accelerating. Monitor konten mereka, identifikasi format yang work, dan counter dengan versi yang lebih baik.</p>
+  <div style="font-size:11px;color:#94A3B8;margin-top:8px">Timeline: Ongoing</div>
+</div>
+<div class="action-card ">
+  <div class="pri m">MEDIUM</div>
+  <h4>Boost Downloader ke Target</h4>
+  <p>Downloader baru 65,57% (9.662/14.735). Konversi sudah excellent (20,58%). Problem = top-of-funnel traffic. Solusi: paid ads, collab, influencer.</p>
+  <div style="font-size:11px;color:#94A3B8;margin-top:8px">Timeline: Minggu 2-4</div>
+</div>
+<div class="action-card ">
+  <div class="pri m">MEDIUM</div>
+  <h4>Cross-Platform Funnel TT &rarr; App</h4>
+  <p>TikTok 335K tapi funnel ke app download belum optimal. Bio link, pinned comment CTA, story series yang drive ke app.</p>
+  <div style="font-size:11px;color:#94A3B8;margin-top:8px">Timeline: Minggu 2-3</div>
+</div>
+<div class="action-card ">
+  <div class="pri m">MEDIUM</div>
+  <h4>Hashtag Strategy Overhaul</h4>
+  <p>Claim niche hashtags: #PolriRecruit2026 #AKPOLReady #LolosPolri #BimbelPolriNo1. Konsisten di setiap post.</p>
+  <div style="font-size:11px;color:#94A3B8;margin-top:8px">Timeline: Minggu 1</div>
+</div>
+<div class="action-card sa">
+  <div class="pri l">LOW</div>
+  <h4>User-Generated Content Campaign</h4>
+  <p>Ajak alumni yang lolos buat testimonial video. UGC 3x lebih engaging dan trustworthy dari brand content.</p>
+  <div style="font-size:11px;color:#94A3B8;margin-top:8px">Timeline: Minggu 3-4</div>
+</div>
+<div class="action-card sa">
+  <div class="pri l">LOW</div>
+  <h4>Live Class Promo Content</h4>
+  <p>Konten sneak peek Live Class 3x/minggu. Clip 30-60 detik best moments dari LC sebagai hook untuk premium.</p>
+  <div style="font-size:11px;color:#94A3B8;margin-top:8px">Timeline: Ongoing</div>
+</div>
+</div>
+<div class="section">
+<div class="section-title"><div class="icon premium">&#127919;</div> Quick Wins vs Strategic Bets</div>
+<div class="table-card">
+<table>
+<thead><tr><th>Kategori</th><th>Action</th><th>Impact</th><th>Effort</th><th>Timeline</th></tr></thead>
+<tbody>
+<tr><td><span class="tag tag-green">Quick Win</span></td><td>Kurangi posting 1-2/hari</td><td>ER naik 2-3x</td><td>Low</td><td>Immediate</td></tr>
+<tr><td><span class="tag tag-green">Quick Win</span></td><td>Hashtag strategy baru</td><td>Discoverability +30%</td><td>Low</td><td>1 minggu</td></tr>
+<tr><td><span class="tag tag-green">Quick Win</span></td><td>Bio link + CTA di TikTok</td><td>App downloads +15%</td><td>Low</td><td>1 hari</td></tr>
+<tr><td><span class="tag tag-blue">Strategic</span></td><td>Konten tes fisik series</td><td>ER naik 5-10x</td><td>Medium</td><td>2-4 minggu</td></tr>
+<tr><td><span class="tag tag-blue">Strategic</span></td><td>TikTok content reset</td><td>Follower growth kembali</td><td>High</td><td>1-2 bulan</td></tr>
+<tr><td><span class="tag tag-blue">Strategic</span></td><td>Paid ads untuk downloader</td><td>Target 14.735 tercapai</td><td>High</td><td>Ongoing</td></tr>
+</tbody></table></div></div>
+</div>
+
+<div class="footer">
+  <p>&#128737; Dashboard JadiPolisi — Bimbel Online POLRI No.1 | Data Snapshot: 25 Juni 2026</p>
+  <p>Sumber: <a href="https://socialblade.com" target="_blank">SocialBlade.com</a> (Social Media) | Centil Analytics (Revenue &amp; Users) | <a href="https://app.jadipolisi.id" target="_blank">app.jadipolisi.id</a></p>
+  <p style="margin-top:8px">PT Cerebrum Edukanesia Nusantara &copy; 2026</p>
+</div>
+</div>
+
+<script>
+function showTab(t){
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.toggle('active',b.getAttribute('data-tab')===t));
+  var pages=document.querySelectorAll('.tab-page');
+  if(t==='semua'){
+    pages.forEach(p=>p.classList.remove('hidden'));
+  } else {
+    pages.forEach(p=>{p.classList.toggle('hidden',p.id!=='tab-'+t);});
+  }
+  setTimeout(function(){try{Object.values(Chart.instances||{}).forEach(function(c){try{c.resize();}catch(e){}});}catch(e){}},100);
+}
+
+function mk(id,cfg){try{var el=document.getElementById(id);if(el){new Chart(el,cfg);}}catch(e){console.error('Chart '+id+' error:',e);}}
+
+document.addEventListener('DOMContentLoaded',function(){
+
+mk('chFollower14',{type:'line',data:{labels:['Jun 12','Jun 13','Jun 14','Jun 15','Jun 16','Jun 17','Jun 18','Jun 19','Jun 20','Jun 21','Jun 22','Jun 23','Jun 24','Jun 25'],datasets:[{label:'Followers',data:[205085,205013,204950,204895,204817,204725,204657,204569,204474,204402,204292,204194,204086,203951],borderColor:'#E1306C',backgroundColor:'rgba(225,48,108,0.1)',fill:true,tension:0.3,pointRadius:4,pointBackgroundColor:'#E1306C'}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{y:{min:203500,max:205500,ticks:{callback:v=>v.toLocaleString('id-ID')}}}}});
+mk('chTTFollower',{type:'line',data:{labels:['Jun 12','Jun 13','Jun 14','Jun 15','Jun 16','Jun 17','Jun 18','Jun 19','Jun 20','Jun 21','Jun 22','Jun 23','Jun 24','Jun 25'],datasets:[{label:'Followers TT',data:[336600,336500,336400,336300,336200,336100,336000,335900,335800,335600,335400,335300,335200,335100],borderColor:'#FF0050',backgroundColor:'rgba(255,0,80,0.1)',fill:true,tension:0.3,pointRadius:4,pointBackgroundColor:'#FF0050'}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{y:{min:334500,max:337000,ticks:{callback:v=>v.toLocaleString('id-ID')}}}}});
+mk('chIGvsTT',{type:'bar',data:{labels:['Followers','Total Posts/Videos','Avg Likes'],datasets:[{label:'Instagram',data:[203951,9248,330],backgroundColor:'#E1306C'},{label:'TikTok',data:[335100,7247,1780],backgroundColor:'#000000'}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'top'}},scales:{y:{ticks:{callback:v=>v>=1000?(v/1000).toFixed(0)+'K':v}}}}});
+mk('chEngComp',{type:'bar',data:{labels:['@jadipolisi.id','@bintangbangsa.id','@generasiandalan','@casispolriid','@aptaschool_polri','@tacticalinpolice','@kelasbimbelofficial'],datasets:[{label:'Engagement Rate %',data:[0.16,0.20,0.11,0.04,0.05,2.95,11.57],backgroundColor:['#3B82F6','#10B981','#64748B','#64748B','#64748B','#F59E0B','#EF4444']}]},options:{responsive:true,maintainAspectRatio:false,indexAxis:'y',plugins:{legend:{display:false}},scales:{x:{title:{display:true,text:'Engagement Rate %'}}}}});
+mk('chHealthRadar',{type:'radar',data:{labels:['Reach','Engagement','Growth','Content Quality','Monetization','App Ecosystem'],datasets:[{label:'JadiPolisi',data:[80,20,15,40,90,75],borderColor:'#3B82F6',backgroundColor:'rgba(59,130,246,0.15)',pointBackgroundColor:'#3B82F6'},{label:'Benchmark',data:[70,60,50,60,60,50],borderColor:'#94A3B8',backgroundColor:'rgba(148,163,184,0.05)',borderDash:[5,5],pointBackgroundColor:'#94A3B8'}]},options:{responsive:true,maintainAspectRatio:false,scales:{r:{min:0,max:100,ticks:{stepSize:20}}}}});
+mk('chTargetBar',{type:'bar',data:{labels:['Downloader','User Premium','Sales Revenue','Konversi','Avg Harga'],datasets:[{label:'Achievement %',data:[65.57,89.95,100,137.17,111.18],backgroundColor:['#F97316','#10B981','#3B82F6','#10B981','#10B981']}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},annotation:{}},scales:{y:{max:150,ticks:{callback:v=>v+'%'}},x:{ticks:{font:{size:11}}}}}});
+mk('chTargetRadar',{type:'radar',data:{labels:['Downloader','User Premium','Sales','Konversi','Avg Harga'],datasets:[{label:'Achievement %',data:[65.57,89.95,100,137.17,111.18],borderColor:'#3B82F6',backgroundColor:'rgba(59,130,246,0.15)',pointBackgroundColor:'#3B82F6'},{label:'Target (100%)',data:[100,100,100,100,100],borderColor:'#EF4444',backgroundColor:'rgba(239,68,68,0.05)',borderDash:[5,5],pointBackgroundColor:'#EF4444'}]},options:{responsive:true,maintainAspectRatio:false,scales:{r:{min:0,max:150,ticks:{stepSize:25}}}}});
+mk('chFunnel',{type:'bar',data:{labels:['Downloader','User Premium','Revenue (Jt)'],datasets:[{label:'Jumlah',data:[9662,1988,221],backgroundColor:['#3B82F6','#10B981','#F59E0B']}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{y:{ticks:{callback:v=>v.toLocaleString('id-ID')}}}}});
+mk('chKompF',{type:'bar',data:{labels:['@jadipolisi.id','@casispolriid','@bintangbangsa.id','@generasiandalan','@aptaschool_polri','@tacticalinpolice','@kelasbimbelofficial'],datasets:[{label:'Followers',data:[203951,166825,153924,90790,87253,58959,20081],backgroundColor:['#3B82F6','#64748B','#10B981','#64748B','#64748B','#F59E0B','#EF4444']}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{y:{ticks:{callback:v=>(v/1000).toFixed(0)+'K'}}}}});
+mk('chKompE',{type:'bar',data:{labels:['@kelasbimbelofficial','@tacticalinpolice','@bintangbangsa.id','@jadipolisi.id','@generasiandalan','@aptaschool_polri','@casispolriid'],datasets:[{label:'ER %',data:[11.57,2.95,0.20,0.16,0.11,0.05,0.04],backgroundColor:['#EF4444','#F59E0B','#10B981','#3B82F6','#64748B','#64748B','#64748B']}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{y:{title:{display:true,text:'Engagement Rate %'}}}}});
+mk('chKompG',{type:'bar',data:{labels:['@bintangbangsa.id','@kelasbimbelofficial','@generasiandalan','@aptaschool_polri','@tacticalinpolice','@casispolriid','@jadipolisi.id'],datasets:[{label:'Growth 14d',data:[1730,82,-16,-158,-263,-461,-1134],backgroundColor:['#10B981','#10B981','#F59E0B','#EF4444','#EF4444','#EF4444','#EF4444']}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{y:{title:{display:true,text:'Follower Change (14 hari)'}}}}});
+mk('chKompL',{type:'bar',data:{labels:['@kelasbimbelofficial','@tacticalinpolice','@jadipolisi.id','@bintangbangsa.id','@generasiandalan','@casispolriid','@aptaschool_polri'],datasets:[{label:'Avg Likes',data:[2279,1735,330,293,98,71,46],backgroundColor:['#EF4444','#F59E0B','#3B82F6','#10B981','#64748B','#64748B','#64748B']}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{y:{title:{display:true,text:'Average Likes per Post'}}}}});
+mk('chPilar',{type:'doughnut',data:{labels:['Tes Fisik & Kesehatan','Psikotes & Akademik','Info Rekrutmen Polri','Motivasi & Success Story','Promo & CTA'],datasets:[{data:[30,25,20,15,10],backgroundColor:['#3B82F6','#10B981','#F59E0B','#8B5CF6','#EF4444']}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'right'}}}});
+mk('chContentScore',{type:'bar',data:{labels:['Hook','Visual','Storytelling','CTA','Hashtag','Caption','Consistency','TikTok'],datasets:[{label:'Score',data:[40,50,45,70,55,50,75,55],backgroundColor:['#EF4444','#EF4444','#EF4444','#10B981','#F59E0B','#EF4444','#10B981','#EF4444']}]},options:{responsive:true,maintainAspectRatio:false,indexAxis:'y',plugins:{legend:{display:false}},scales:{x:{min:0,max:100,title:{display:true,text:'Score /100'}}}}});
+});
+</script>
+</body>
+</html>
