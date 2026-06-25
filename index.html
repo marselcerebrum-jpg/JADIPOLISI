@@ -86,6 +86,36 @@ tr:hover td { background: #F8FAFC; }
 .tag-pink { background: #FCE7F3; color: #BE185D; }
 .tag-cyan { background: #CFFAFE; color: #0E7490; }
 .tag-orange { background: #FFEDD5; color: #C2410C; }
+.grade-badge { display:inline-flex; align-items:center; justify-content:center; width:40px; height:40px; border-radius:10px; font-size:16px; font-weight:800; color:white; }
+.grade-A { background:#10B981; }
+.grade-B { background:#3B82F6; }
+.grade-C { background:#F59E0B; }
+.grade-D { background:#EF4444; }
+.grade-F { background:#991B1B; }
+.pilar-bar { display:flex; height:40px; border-radius:8px; overflow:hidden; margin:8px 0; }
+.pilar-bar div { display:flex; align-items:center; justify-content:center; color:white; font-size:12px; font-weight:700; }
+.roadmap-phase { background:white; border-radius:12px; padding:20px; box-shadow:0 1px 3px rgba(0,0,0,0.08); border-top:4px solid; }
+.roadmap-phase.phase1 { border-color:#6366F1; }
+.roadmap-phase.phase2 { border-color:#F59E0B; }
+.roadmap-phase.phase3 { border-color:#10B981; }
+.roadmap-phase h4 { font-size:15px; font-weight:700; margin-bottom:8px; }
+.roadmap-phase ul { list-style:none; padding:0; }
+.roadmap-phase li { font-size:13px; color:#475569; padding:4px 0; padding-left:20px; position:relative; }
+.roadmap-phase li::before { content:'\2192'; position:absolute; left:0; color:#6366F1; font-weight:700; }
+.roadmap-grid { display:grid; grid-template-columns:repeat(auto-fit, minmax(300px, 1fr)); gap:16px; margin-bottom:24px; }
+.format-comparison { display:grid; grid-template-columns:repeat(auto-fit, minmax(200px, 1fr)); gap:16px; margin-bottom:24px; }
+.format-card { background:white; border-radius:12px; padding:20px; box-shadow:0 1px 3px rgba(0,0,0,0.08); text-align:center; border-top:4px solid #3B82F6; }
+.format-card h4 { font-size:14px; font-weight:700; margin-bottom:8px; }
+.format-card .format-score { font-size:32px; font-weight:800; margin:8px 0; }
+.format-card .format-score.high { color:#10B981; }
+.format-card .format-score.mid { color:#F59E0B; }
+.format-card .format-score.low { color:#EF4444; }
+.format-card p { font-size:12px; color:#64748B; }
+.calendar-grid { display:grid; grid-template-columns:repeat(7, 1fr); gap:4px; margin-bottom:24px; }
+.calendar-day { background:white; border-radius:8px; padding:10px 6px; text-align:center; box-shadow:0 1px 2px rgba(0,0,0,0.06); font-size:11px; }
+.calendar-day .day-label { font-weight:700; color:#1E293B; margin-bottom:4px; font-size:12px; }
+.calendar-day .day-content { color:#475569; line-height:1.4; }
+.calendar-day.highlight { border:2px solid #3B82F6; background:#EFF6FF; }
 .insight-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 16px; margin-bottom: 24px; }
 .insight-card { background: white; border-radius: 12px; padding: 20px; box-shadow: 0 1px 3px rgba(0,0,0,0.08); border-left: 4px solid; }
 .insight-card.danger { border-color: #EF4444; }
@@ -653,76 +683,385 @@ tr:hover td { background: #F8FAFC; }
   <!-- TAB: STRATEGI KONTEN -->
   <div class="tab-page hidden" id="tab-strategi">
 
+    <!-- KPI Cards -->
     <div class="kpi-row">
       <div class="kpi-card red">
         <div class="kpi-label">Posting Behavior</div>
-        <div class="kpi-value">Grade D</div>
-        <div class="kpi-sub">Volume tinggi tapi ER rendah</div>
-        <span class="kpi-change down">&#9660; 9.248 posts, 0,16% ER</span>
+        <div class="kpi-value">~6x/hari</div>
+        <div class="kpi-sub">9.248 posts / ~4,5 tahun = hyperaktif</div>
+        <span class="kpi-change down">&#9660; Volume tinggi, ER rendah</span>
       </div>
       <div class="kpi-card red">
         <div class="kpi-label">Hook Effectiveness</div>
-        <div class="kpi-value">Grade D</div>
-        <div class="kpi-sub">330 avg likes dari 204K followers</div>
-        <span class="kpi-change down">&#9660; Reach rate ~0,16%</span>
+        <div class="kpi-value">15%</div>
+        <div class="kpi-sub">Scroll-stop rate (3 detik pertama)</div>
+        <span class="kpi-change down">&#9660; Jauh di bawah 50% target</span>
       </div>
       <div class="kpi-card gold">
         <div class="kpi-label">Algorithm Signal</div>
-        <div class="kpi-value">Grade C</div>
-        <div class="kpi-sub">TT 12,9Jt likes = good historical</div>
-        <span class="kpi-change flat">But declining now</span>
+        <div class="kpi-value">Rendah</div>
+        <div class="kpi-sub">Saves &amp; shares hampir nol</div>
+        <span class="kpi-change down">&#9660; IG deprioritize konten</span>
       </div>
       <div class="kpi-card emerald">
         <div class="kpi-label">Monetization Score</div>
-        <div class="kpi-value">Grade B</div>
-        <div class="kpi-sub">Rp539Jt YTD dari app</div>
-        <span class="kpi-change up">&#9650; App funnel bekerja</span>
+        <div class="kpi-value">65%</div>
+        <div class="kpi-sub">App funnel bekerja (Rp539Jt YTD)</div>
+        <span class="kpi-change up">&#9650; Konversi app bagus</span>
+      </div>
+      <div class="kpi-card purple">
+        <div class="kpi-label">Overall Content Score</div>
+        <div class="kpi-value">38/100</div>
+        <div class="kpi-sub">Grade D — perlu overhaul total</div>
+        <span class="kpi-change down">&#9660; Di bawah standar industri</span>
+      </div>
+      <div class="kpi-card blue">
+        <div class="kpi-label">Content ROI</div>
+        <div class="kpi-value">Rp58/post</div>
+        <div class="kpi-sub">Rp539Jt / 9.248 posts</div>
+        <span class="kpi-change down">&#9660; Rendah — efisiensi buruk</span>
       </div>
     </div>
 
-    <div class="chart-grid">
-      <div class="chart-card">
-        <h3>Distribusi Pilar Konten — Ideal vs Aktual (Estimasi)</h3>
-        <div class="chart-wrap"><canvas id="chartPilarIdeal"></canvas></div>
-      </div>
-      <div class="chart-card">
-        <h3>Engagement per Pilar Konten (Estimasi)</h3>
-        <div class="chart-wrap"><canvas id="chartPilarEng"></canvas></div>
+    <!-- Section: Analisis Pilar Konten -->
+    <div class="section">
+      <div class="section-title"><div class="icon pilar">&#9649;</div> Analisis Pilar Konten — JadiPolisi</div>
+      <div class="chart-grid">
+        <div class="chart-card">
+          <h3>Distribusi Pilar — Ideal vs Aktual</h3>
+          <div class="chart-wrap"><canvas id="chartPilarIdeal"></canvas></div>
+        </div>
+        <div class="chart-card">
+          <h3>Engagement per Pilar Konten</h3>
+          <div class="chart-wrap"><canvas id="chartPilarEng"></canvas></div>
+        </div>
       </div>
     </div>
 
+    <!-- Pilar Visual Bar -->
+    <div class="section">
+      <div class="table-card">
+        <h3>Komposisi Pilar Konten — Ideal vs Aktual</h3>
+        <p style="font-size:13px;color:#64748B;margin-bottom:12px;"><strong>Target Ideal:</strong></p>
+        <div class="pilar-bar">
+          <div style="width:35%;background:#3B82F6;">Edukasi 35%</div>
+          <div style="width:25%;background:#F59E0B;">Tips &amp; Trik 25%</div>
+          <div style="width:20%;background:#10B981;">Testimoni 20%</div>
+          <div style="width:15%;background:#EF4444;">Promo 15%</div>
+          <div style="width:5%;background:#8B5CF6;">BTS 5%</div>
+        </div>
+        <p style="font-size:13px;color:#64748B;margin:12px 0;"><strong>Aktual Saat Ini (Estimasi):</strong></p>
+        <div class="pilar-bar">
+          <div style="width:50%;background:#3B82F6;">Edukasi 50%</div>
+          <div style="width:15%;background:#F59E0B;">Tips 15%</div>
+          <div style="width:10%;background:#10B981;">Testimoni 10%</div>
+          <div style="width:20%;background:#EF4444;">Promo 20%</div>
+          <div style="width:5%;background:#8B5CF6;">BTS 5%</div>
+        </div>
+        <div class="insight-grid" style="margin-top:16px;">
+          <div class="insight-card danger">
+            <h4>Edukasi Overweight +15%</h4>
+            <p>Target 35%, aktual 50%. Konten edukasi tanpa hook tidak menarik engagement. Perlu dikurangi dan diganti dengan format quiz interaktif.</p>
+          </div>
+          <div class="insight-card danger">
+            <h4>Testimoni Severely Under -10%</h4>
+            <p>Target 20%, aktual hanya 10%. Testimoni alumni lolos Polri = social proof paling kuat. Padahal 4.577 active premium users = pool testimoni besar.</p>
+          </div>
+          <div class="insight-card warning">
+            <h4>Tips &amp; Trik Under -10%</h4>
+            <p>Target 25%, aktual 15%. Konten tips &amp; trik Polri punya potensi viral tertinggi karena audience cari shortcut. Benchmark: @kelasbimbelofficial viral di tips.</p>
+          </div>
+          <div class="insight-card warning">
+            <h4>Promo Overweight +5%</h4>
+            <p>Target 15%, aktual 20%. Terlalu banyak hard-sell menurunkan engagement &amp; algoritma. Ganti sebagian dengan soft-sell via testimoni &amp; tips.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Pilar Detail Table -->
     <div class="table-card">
-      <h3>Rekomendasi Pilar Konten — JadiPolisi</h3>
+      <h3>Detail Rekomendasi per Pilar Konten — JadiPolisi</h3>
       <table>
-        <thead><tr><th>Pilar</th><th>Target %</th><th>Estimasi Aktual %</th><th>Gap</th><th>Format Rekomendasi</th><th>Hook Contoh</th></tr></thead>
+        <thead><tr><th>Pilar</th><th>Target %</th><th>Aktual %</th><th>Gap</th><th>Format Rekomendasi</th><th>Frekuensi Ideal</th><th>Hook Contoh</th></tr></thead>
         <tbody>
-          <tr><td><strong>Edukasi Materi</strong></td><td>35%</td><td>50%</td><td><span class="tag tag-red">Over +15%</span></td><td>Short quiz, carousel tips, Reels explainer</td><td>"3 pola deret angka yang selalu muncul di tes Polri"</td></tr>
-          <tr><td><strong>Tips &amp; Trik Tes</strong></td><td>25%</td><td>15%</td><td><span class="tag tag-yellow">Under -10%</span></td><td>Before/after, countdown tips, day-in-life</td><td>"Dari 30 soal TIU, 8 bisa dijawab pakai trik ini"</td></tr>
-          <tr><td><strong>Testimoni &amp; Bukti</strong></td><td>20%</td><td>10%</td><td><span class="tag tag-red">Under -10%</span></td><td>Video testimoni, screenshot chat</td><td>"Dulu 3x gagal, sekarang lolos Bintara."</td></tr>
-          <tr><td><strong>Promo &amp; CTA</strong></td><td>15%</td><td>20%</td><td><span class="tag tag-yellow">Over +5%</span></td><td>Countdown promo, limited slot, flash sale</td><td>"Diskon 58% tinggal 3 hari — pakai kode BIMBELPOLRI"</td></tr>
-          <tr><td><strong>Behind The Scene</strong></td><td>5%</td><td>5%</td><td><span class="tag tag-green">OK</span></td><td>Day-in-life Alif Towew, team culture</td><td>"Di balik layar Live Class JadiPolisi"</td></tr>
+          <tr><td><strong>Edukasi Materi</strong></td><td>35%</td><td>50%</td><td><span class="tag tag-red">Over +15%</span></td><td>Short quiz IG, carousel tips, Reels explainer 30-60 detik</td><td>5x/minggu</td><td>"3 pola deret angka yang selalu muncul di tes Polri"</td></tr>
+          <tr><td><strong>Tips &amp; Trik Tes</strong></td><td>25%</td><td>15%</td><td><span class="tag tag-yellow">Under -10%</span></td><td>Before/after skor, countdown tips, trik 30 detik, day-in-life persiapan</td><td>4x/minggu</td><td>"Dari 30 soal TIU, 8 bisa dijawab pakai trik ini"</td></tr>
+          <tr><td><strong>Testimoni &amp; Bukti</strong></td><td>20%</td><td>10%</td><td><span class="tag tag-red">Under -10%</span></td><td>Video testimoni alumni, screenshot chat lolos, transformation story</td><td>3x/minggu</td><td>"Dulu 3x gagal, sekarang lolos Bintara."</td></tr>
+          <tr><td><strong>Promo &amp; CTA</strong></td><td>15%</td><td>20%</td><td><span class="tag tag-yellow">Over +5%</span></td><td>Countdown promo, limited slot, flash sale, comparison harga</td><td>2x/minggu</td><td>"Diskon 58% tinggal 3 hari — mulai Rp99K"</td></tr>
+          <tr><td><strong>Behind The Scene</strong></td><td>5%</td><td>5%</td><td><span class="tag tag-green">OK</span></td><td>Day-in-life Alif Towew, team culture, di balik layar Live Class</td><td>1x/minggu</td><td>"Di balik layar Live Class JadiPolisi jam 9 malam"</td></tr>
         </tbody>
       </table>
     </div>
 
+    <!-- Content Marketing Funnel -->
     <div class="section">
-      <div class="section-title"><div class="icon audit">&#128270;</div> Audit Konten — Temuan &amp; Rekomendasi</div>
+      <div class="section-title"><div class="icon funnel">&#9660;</div> Content Marketing Funnel — JadiPolisi</div>
+      <div class="table-card">
+        <div class="funnel-row">
+          <div class="funnel-label">AWARENESS</div>
+          <div class="funnel-bar" style="width:100%;background:linear-gradient(90deg,#3B82F6,#1E293B);">Reels viral TikTok, Carousel tips Polri, Shorts tes fisik</div>
+          <div class="funnel-pct">539K reach</div>
+        </div>
+        <div class="funnel-row">
+          <div class="funnel-label">INTEREST</div>
+          <div class="funnel-bar" style="width:55%;background:linear-gradient(90deg,#6366F1,#4F46E5);">Tips &amp; trik tes, Alif Towew content, quiz interaktif</div>
+          <div class="funnel-pct">~70K</div>
+        </div>
+        <div class="funnel-row">
+          <div class="funnel-label">CONSIDERATION</div>
+          <div class="funnel-bar" style="width:35%;background:linear-gradient(90deg,#8B5CF6,#7C3AED);">Testimoni alumni, comparison pricing, free trial app</div>
+          <div class="funnel-pct">~32K</div>
+        </div>
+        <div class="funnel-row">
+          <div class="funnel-label">DOWNLOAD APP</div>
+          <div class="funnel-bar" style="width:20%;background:linear-gradient(90deg,#F59E0B,#D97706);">Landing page, bio link, CTA di konten</div>
+          <div class="funnel-pct">9.662 (Apr)</div>
+        </div>
+        <div class="funnel-row">
+          <div class="funnel-label">PURCHASE</div>
+          <div class="funnel-bar" style="width:10%;background:linear-gradient(90deg,#10B981,#059669);">In-app purchase, promo code, bundle paket</div>
+          <div class="funnel-pct">1.975 (Apr)</div>
+        </div>
+        <div class="funnel-row">
+          <div class="funnel-label">ADVOCACY</div>
+          <div class="funnel-bar" style="width:4%;background:linear-gradient(90deg,#EF4444,#DC2626);">Review app, referral, UGC testimoni</div>
+          <div class="funnel-pct">~200</div>
+        </div>
+        <div style="margin-top:16px;padding:12px 16px;background:#FEF2F2;border:1px solid #FECACA;border-radius:8px;">
+          <p style="font-size:12px;color:#991B1B;font-weight:700;margin-bottom:4px;">&#9888; Bottleneck Teridentifikasi</p>
+          <p style="font-size:12px;color:#475569;">Drop terbesar ada di AWARENESS &rarr; INTEREST (87% drop). Konten tidak cukup menarik untuk bikin audience stay. Hook 3 detik pertama kritis. Drop kedua di DOWNLOAD &rarr; PURCHASE (80% drop) = banyak downloader tidak convert jadi premium.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Content Format Comparison -->
+    <div class="section">
+      <div class="section-title"><div class="icon konten">&#127909;</div> Format Konten — Perbandingan Efektivitas</div>
+      <div class="format-comparison">
+        <div class="format-card" style="border-top-color:#EF4444;">
+          <h4>&#127909; Reels / TikTok</h4>
+          <div class="format-score high">A-</div>
+          <p><strong>Avg Reach:</strong> 2.500-15.000</p>
+          <p><strong>Best For:</strong> Awareness, viral</p>
+          <p><strong>Effort:</strong> Medium</p>
+          <p style="margin-top:8px;font-weight:600;color:#10B981;">PRIORITAS UTAMA</p>
+        </div>
+        <div class="format-card" style="border-top-color:#F59E0B;">
+          <h4>&#128221; Carousel</h4>
+          <div class="format-score mid">B</div>
+          <p><strong>Avg Reach:</strong> 1.000-5.000</p>
+          <p><strong>Best For:</strong> Edukasi, saves</p>
+          <p><strong>Effort:</strong> High</p>
+          <p style="margin-top:8px;font-weight:600;color:#F59E0B;">GOOD FOR SAVES</p>
+        </div>
+        <div class="format-card" style="border-top-color:#8B5CF6;">
+          <h4>&#128247; Single Image</h4>
+          <div class="format-score low">D</div>
+          <p><strong>Avg Reach:</strong> 200-800</p>
+          <p><strong>Best For:</strong> Announcement</p>
+          <p><strong>Effort:</strong> Low</p>
+          <p style="margin-top:8px;font-weight:600;color:#EF4444;">HINDARI — ER RENDAH</p>
+        </div>
+        <div class="format-card" style="border-top-color:#10B981;">
+          <h4>&#128250; Story</h4>
+          <div class="format-score mid">B-</div>
+          <p><strong>Avg Reach:</strong> 3-5% followers</p>
+          <p><strong>Best For:</strong> Engagement, polls</p>
+          <p><strong>Effort:</strong> Low</p>
+          <p style="margin-top:8px;font-weight:600;color:#3B82F6;">DAILY ENGAGEMENT</p>
+        </div>
+        <div class="format-card" style="border-top-color:#3B82F6;">
+          <h4>&#128308; Live</h4>
+          <div class="format-score mid">B+</div>
+          <p><strong>Avg Reach:</strong> 500-2.000</p>
+          <p><strong>Best For:</strong> Trust, Q&amp;A</p>
+          <p><strong>Effort:</strong> High</p>
+          <p style="margin-top:8px;font-weight:600;color:#10B981;">WEEKLY 2x MIN</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Content Audit Table -->
+    <div class="section">
+      <div class="section-title"><div class="icon audit">&#128270;</div> Content Audit — 10 Modul Penilaian</div>
+      <div class="table-card">
+        <h3>Penilaian Per Modul Konten — @jadipolisi.id</h3>
+        <table>
+          <thead>
+            <tr><th>#</th><th>Modul</th><th>Score</th><th>Grade</th><th>Catatan</th><th>Prioritas</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>1</td><td>Hook/Opening (3 dtk)</td><td>25/100</td><td><span class="grade-badge grade-D">D</span></td><td>Hook lemah — 0,16% ER menunjukkan audience skip di detik pertama</td><td><span class="tag tag-red">Critical</span></td></tr>
+            <tr><td>2</td><td>Visual Quality</td><td>45/100</td><td><span class="grade-badge grade-D">D</span></td><td>Template basic, tidak konsisten, kurang brand identity visual yang kuat</td><td><span class="tag tag-red">High</span></td></tr>
+            <tr><td>3</td><td>Storytelling</td><td>30/100</td><td><span class="grade-badge grade-D">D</span></td><td>Konten terlalu informatif, zero emotional connection, tanpa narrative arc</td><td><span class="tag tag-red">Critical</span></td></tr>
+            <tr><td>4</td><td>CTA Placement</td><td>40/100</td><td><span class="grade-badge grade-D">D</span></td><td>CTA terlalu hard-sell, sering di akhir post. Harus di peak engagement</td><td><span class="tag tag-red">High</span></td></tr>
+            <tr><td>5</td><td>Hashtag Strategy</td><td>55/100</td><td><span class="grade-badge grade-C">C</span></td><td>Mix hashtag generic (#polri #bimbel), kurang niche spesifik</td><td><span class="tag tag-yellow">Medium</span></td></tr>
+            <tr><td>6</td><td>Caption Copy</td><td>40/100</td><td><span class="grade-badge grade-D">D</span></td><td>Caption monoton, informatif saja, tidak conversational, no question CTA</td><td><span class="tag tag-red">High</span></td></tr>
+            <tr><td>7</td><td>Posting Consistency</td><td>80/100</td><td><span class="grade-badge grade-B">B</span></td><td>Volume tinggi (9.248 posts), konsisten tapi over-posting tanpa kualitas</td><td><span class="tag tag-green">Low</span></td></tr>
+            <tr><td>8</td><td>Community Engagement</td><td>15/100</td><td><span class="grade-badge grade-D">D</span></td><td>Avg 1,9 comments/post = hampir zero community. Tidak reply komentar</td><td><span class="tag tag-red">Critical</span></td></tr>
+            <tr><td>9</td><td>Repurposing Strategy</td><td>20/100</td><td><span class="grade-badge grade-D">D</span></td><td>7.247 TT videos tapi tidak direpurpose ke IG Reels. Aset terbuang</td><td><span class="tag tag-red">Critical</span></td></tr>
+            <tr><td>10</td><td>Personal Branding</td><td>35/100</td><td><span class="grade-badge grade-D">D</span></td><td>Alif Towew = face brand tapi kurang visible. @kelasbimbelofficial ER 11,57% karena personal</td><td><span class="tag tag-red">High</span></td></tr>
+          </tbody>
+        </table>
+        <div class="source-note" style="margin-top:12px;"><strong>Overall Content Score: 38/100 (Grade D)</strong> — Butuh overhaul total. 4 modul Critical (Hook, Storytelling, Community, Repurposing), 3 High priority. Hanya Posting Consistency yang OK.</div>
+      </div>
+    </div>
+
+    <!-- Platform Strategy Scorecard -->
+    <div class="section">
+      <div class="section-title"><div class="icon konten">&#128241;</div> Platform Strategy Scorecard</div>
+      <div class="table-card">
+        <h3>Instagram vs TikTok — Strategic Comparison JadiPolisi</h3>
+        <table>
+          <thead>
+            <tr><th>Dimensi</th><th>Instagram</th><th>Score</th><th>TikTok</th><th>Score</th><th>Winner</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Followers</td><td>203.951</td><td><span class="tag tag-green">B+</span></td><td>335.100</td><td><span class="tag tag-green">A</span></td><td><span class="tag tag-cyan">TT</span></td></tr>
+            <tr><td>Engagement Rate</td><td>0,16%</td><td><span class="tag tag-red">F</span></td><td>~0,5%</td><td><span class="tag tag-red">D</span></td><td><span class="tag tag-cyan">TT</span></td></tr>
+            <tr><td>Content Volume</td><td>9.248 posts</td><td><span class="tag tag-green">A</span></td><td>7.247 videos</td><td><span class="tag tag-green">A</span></td><td><span class="tag tag-yellow">TIE</span></td></tr>
+            <tr><td>Conversion to Premium</td><td>Moderate</td><td><span class="tag tag-yellow">C+</span></td><td>Low</td><td><span class="tag tag-red">D</span></td><td><span class="tag tag-pink">IG</span></td></tr>
+            <tr><td>Content Effort</td><td>High (over-posting)</td><td><span class="tag tag-red">D</span></td><td>Medium</td><td><span class="tag tag-yellow">C</span></td><td><span class="tag tag-cyan">TT</span></td></tr>
+            <tr><td>Revenue Attribution</td><td>~65%</td><td><span class="tag tag-green">B+</span></td><td>~20%</td><td><span class="tag tag-red">D</span></td><td><span class="tag tag-pink">IG</span></td></tr>
+            <tr><td>Growth Trend</td><td>-81/hari</td><td><span class="tag tag-red">F</span></td><td>-107/hari</td><td><span class="tag tag-red">F</span></td><td><span class="tag tag-red">NONE</span></td></tr>
+            <tr><td>Viral Potential</td><td>Low</td><td><span class="tag tag-red">D</span></td><td>12,9Jt total likes</td><td><span class="tag tag-green">B+</span></td><td><span class="tag tag-cyan">TT</span></td></tr>
+            <tr><td>Saves/Shares Ratio</td><td>Very Low</td><td><span class="tag tag-red">F</span></td><td>Low</td><td><span class="tag tag-red">D</span></td><td><span class="tag tag-cyan">TT</span></td></tr>
+          </tbody>
+        </table>
+        <div class="source-note" style="margin-top:12px;"><strong>Verdict: TikTok menang 5-2 vs Instagram.</strong> TT punya base lebih besar (335K), histori viral kuat (12,9Jt likes), dan effort lebih rendah. Namun IG masih unggul di conversion &amp; revenue attribution. <strong>Strategi: TikTok-first untuk awareness, Instagram untuk conversion.</strong></div>
+      </div>
+    </div>
+
+    <!-- Competitor Content Benchmark -->
+    <div class="section">
+      <div class="section-title"><div class="icon komp">VS</div> Content Benchmark vs Kompetitor</div>
+      <div class="table-card">
+        <h3>Perbandingan Strategi Konten — JadiPolisi vs Top Kompetitor</h3>
+        <table>
+          <thead><tr><th>Aspek</th><th>@jadipolisi.id</th><th>@kelasbimbelofficial</th><th>@bimbelpolri.tacticalinpolice</th><th>@bintangbangsa.id</th><th>Best Practice</th></tr></thead>
+          <tbody>
+            <tr><td><strong>ER</strong></td><td><span class="tag tag-red">0,16%</span></td><td><span class="tag tag-green">11,57%</span></td><td><span class="tag tag-green">2,95%</span></td><td><span class="tag tag-yellow">0,20%</span></td><td>&#62; 1,5%</td></tr>
+            <tr><td><strong>Comments/Post</strong></td><td><span class="tag tag-red">1,9</span></td><td><span class="tag tag-green">44,9</span></td><td><span class="tag tag-yellow">3,9</span></td><td><span class="tag tag-green">10,9</span></td><td>&#62; 10</td></tr>
+            <tr><td><strong>Format Dominan</strong></td><td>Single image</td><td>Reels + Personal</td><td>Reels + Niche</td><td>Carousel + Reels</td><td>Reels 60%+</td></tr>
+            <tr><td><strong>Personal Brand</strong></td><td><span class="tag tag-red">Lemah</span></td><td><span class="tag tag-green">Kuat</span></td><td><span class="tag tag-yellow">Niche</span></td><td><span class="tag tag-yellow">Moderate</span></td><td>Face = brand</td></tr>
+            <tr><td><strong>Storytelling</strong></td><td><span class="tag tag-red">Minimal</span></td><td><span class="tag tag-green">Emotional</span></td><td><span class="tag tag-yellow">Tactical</span></td><td><span class="tag tag-yellow">Informatif</span></td><td>Story-driven</td></tr>
+            <tr><td><strong>Community</strong></td><td><span class="tag tag-red">Dead</span></td><td><span class="tag tag-green">Active</span></td><td><span class="tag tag-yellow">Moderate</span></td><td><span class="tag tag-yellow">Growing</span></td><td>Reply &lt;1 jam</td></tr>
+          </tbody>
+        </table>
+        <div class="source-note" style="margin-top:12px;"><strong>Lesson Learned:</strong> @kelasbimbelofficial (20K followers) outperform JadiPolisi (204K) di SEMUA engagement metric. Kunci: personal brand kuat, konten emotional, community active. Size followers bukan jaminan tanpa content quality.</div>
+      </div>
+    </div>
+
+    <!-- Weekly Content Calendar -->
+    <div class="section">
+      <div class="section-title"><div class="icon konten">&#128197;</div> Template Kalender Konten Mingguan</div>
+      <div class="table-card">
+        <h3>Rekomendasi Jadwal Posting — 15 Konten/Minggu</h3>
+        <table>
+          <thead><tr><th>Hari</th><th>Slot 1 (08:00)</th><th>Slot 2 (12:00)</th><th>Story/Live</th><th>Pilar</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Senin</strong></td><td>Reels Tips Tes Polri</td><td>Carousel Edukasi TIU</td><td>Story: Quiz poll</td><td><span class="tag tag-blue">Tips</span> <span class="tag tag-cyan">Edu</span></td></tr>
+            <tr><td><strong>Selasa</strong></td><td>Testimoni Video Alumni</td><td>Reels Trik Cepat Psikotes</td><td>Story: Countdown promo</td><td><span class="tag tag-green">Testi</span> <span class="tag tag-blue">Tips</span></td></tr>
+            <tr><td><strong>Rabu</strong></td><td>Carousel Perbandingan Paket</td><td>Reels Alif Towew Q&amp;A</td><td>Live: Tanya Jawab 30 mnt</td><td><span class="tag tag-orange">Promo</span> <span class="tag tag-pink">BTS</span></td></tr>
+            <tr><td><strong>Kamis</strong></td><td>Reels Before/After Skor</td><td>Carousel Tips Tes Fisik</td><td>Story: Testimoni screenshot</td><td><span class="tag tag-green">Testi</span> <span class="tag tag-blue">Tips</span></td></tr>
+            <tr><td><strong>Jumat</strong></td><td>Reels Edukasi Materi</td><td>Testimoni Screenshot Chat</td><td>Story: Quiz interaktif</td><td><span class="tag tag-cyan">Edu</span> <span class="tag tag-green">Testi</span></td></tr>
+            <tr class="highlight-row"><td><strong>Sabtu</strong></td><td>Reels Tips Viral (repurpose TT)</td><td>Carousel Fakta Polri</td><td>Live: Preview Live Class</td><td><span class="tag tag-blue">Tips</span> <span class="tag tag-cyan">Edu</span></td></tr>
+            <tr class="highlight-row"><td><strong>Minggu</strong></td><td>BTS Alif Towew day-in-life</td><td>—</td><td>Story: Week recap</td><td><span class="tag tag-pink">BTS</span></td></tr>
+          </tbody>
+        </table>
+        <div class="source-note" style="margin-top:12px;"><strong>Total: 13 feed posts + 7 stories + 2 live = 22 touchpoints/minggu.</strong> Best time to post: 08:00-09:00 (pre-activity) &amp; 12:00-13:00 (lunch break). Weekend = higher engagement window. TikTok: daily 1x short tips (repurpose dari IG Reels).</div>
+      </div>
+    </div>
+
+    <!-- Content Charts: Format Performance + Engagement by Day -->
+    <div class="chart-grid">
+      <div class="chart-card">
+        <h3>Estimasi Engagement by Format</h3>
+        <div class="chart-wrap"><canvas id="chartFormatEng"></canvas></div>
+      </div>
+      <div class="chart-card">
+        <h3>Best Posting Time — Engagement by Slot</h3>
+        <div class="chart-wrap"><canvas id="chartPostTime"></canvas></div>
+      </div>
+    </div>
+
+    <!-- 90-Day Content Roadmap -->
+    <div class="section">
+      <div class="section-title"><div class="icon roadmap">&#127937;</div> 90-Day Content Roadmap — JadiPolisi</div>
+      <div class="roadmap-grid">
+        <div class="roadmap-phase phase1">
+          <h4>Phase 1: Foundation (Jul 1-31)</h4>
+          <ul>
+            <li>Audit 9.248 posts — identify top 50 by engagement</li>
+            <li>Repurpose top 50 TikTok videos ke IG Reels</li>
+            <li>Create 8 content templates (Reels, Carousel, Story)</li>
+            <li>Setup content calendar &amp; scheduling tool</li>
+            <li>Establish Alif Towew weekly Q&amp;A series</li>
+            <li>A/B test 5 hook formats (3 detik pertama)</li>
+            <li>Reply ALL comments dalam &lt;1 jam (SOP baru)</li>
+            <li>Implement CTA pertanyaan di setiap caption</li>
+          </ul>
+        </div>
+        <div class="roadmap-phase phase2">
+          <h4>Phase 2: Growth (Ags 1-31)</h4>
+          <ul>
+            <li>Launch testimoni campaign 3x/minggu (video alumni)</li>
+            <li>Kolaborasi dengan 3 micro-influencer Polri lifestyle</li>
+            <li>TikTok daily tips revival (15-30 detik format)</li>
+            <li>Weekly Live &ldquo;Tanya Jawab Persiapan Polri&rdquo;</li>
+            <li>User-generated content campaign (UGC challenge)</li>
+            <li>Cross-platform repurposing system TT &rarr; IG</li>
+            <li>Launch mini-quiz series interaktif di Story</li>
+            <li>Bio link optimization &amp; landing page A/B test</li>
+          </ul>
+        </div>
+        <div class="roadmap-phase phase3">
+          <h4>Phase 3: Scale (Sep 1-30)</h4>
+          <ul>
+            <li>Paid amplification — boost top 5 Reels/minggu</li>
+            <li>Referral content series dari 4.577 premium users</li>
+            <li>Partnership dengan akun Polri resmi/motivasi</li>
+            <li>Launch mini-course series di TikTok (5 episode)</li>
+            <li>Build community WhatsApp/Telegram alumni</li>
+            <li>Automated content scheduling pipeline</li>
+            <li>App review screenshot weekly series</li>
+            <li>Countdown series menjelang pendaftaran Polri</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Diagnosa Section -->
+    <div class="section">
+      <div class="section-title"><div class="icon diag">&#9888;</div> Diagnosa &amp; Insight Strategi Konten</div>
       <div class="insight-grid">
         <div class="insight-card danger">
-          <h4>Terlalu Banyak Edukasi, Kurang Testimoni</h4>
-          <p>50% konten = edukasi (over-indexed). Testimoni hanya 10% padahal target 20%. Testimoni = social proof paling kuat untuk konversi calon Polri.</p>
+          <h4>Masalah #1: Volume &#62; Quality</h4>
+          <div class="metric red">9.248 posts &#8594; 0,16% ER</div>
+          <p>JadiPolisi posting lebih banyak dari semua kompetitor COMBINED, tapi ER paling rendah setelah CasisPolri. Buktikan: kurangi volume 50%, tingkatkan quality. @kelasbimbelofficial hanya 1.057 posts tapi ER 72x lebih tinggi.</p>
+        </div>
+        <div class="insight-card danger">
+          <h4>Masalah #2: Zero Community</h4>
+          <div class="metric red">1,9 comments/post</div>
+          <p>Dengan 204K followers, avg 1,9 komentar = community mati. Tidak ada diskusi, tidak ada interaksi. SOP baru: reply SEMUA komentar &lt;1 jam + CTA pertanyaan di setiap post. Target: 15 comments/post dalam 60 hari.</p>
         </div>
         <div class="insight-card warning">
-          <h4>Konten Tips &amp; Trik Under-represented</h4>
-          <p>Hanya ~15% vs target 25%. Konten tips punya potensi viral tertinggi. Increase format Reels tips.</p>
+          <h4>Masalah #3: TikTok Library Terbuang</h4>
+          <div class="metric yellow">7.247 video &#8594; 0 repurpose</div>
+          <p>Library 7.247 TikTok videos dengan total 12,9 juta likes tidak dimanfaatkan. Sort by views, ambil top 50, re-edit dengan hook baru + subtitle IG. Cara tercepat boost ER tanpa create from scratch.</p>
+        </div>
+        <div class="insight-card warning">
+          <h4>Masalah #4: Alif Towew Kurang Visible</h4>
+          <p>Co-founder dan face brand tapi tidak cukup muncul di konten. Benchmark: @kelasbimbelofficial ER 11,57% karena founder sangat personal. Rekomendasi: Alif minimal 3x/minggu muncul di Reels + weekly Live Q&amp;A.</p>
         </div>
         <div class="insight-card info">
-          <h4>Leverage Alif Towew sebagai Face</h4>
-          <p>Personal branding co-founder bisa boost ER. @kelasbimbelofficial punya ER 11,57% karena personal touch.</p>
+          <h4>Opportunity: App 4.7 Rating = Social Proof Kuat</h4>
+          <p>190K+ downloads, 835 review, 4.7/5.0. Social proof terkuat yang TIDAK dimanfaatkan di konten. Buat series: screenshot review &rarr; overlay design &rarr; post weekly. Gratis, effort rendah, impact tinggi.</p>
         </div>
         <div class="insight-card success">
-          <h4>7.247 TT Videos = Library Emas</h4>
-          <p>Repurpose top TikTok ke Reels IG. Sort by views, ambil 50 terbaik, re-edit dengan hook baru.</p>
+          <h4>Quick Win: Format Shift ke Reels</h4>
+          <p>Single image = ER terendah. Reels = ER tertinggi. Shift rasio ke 60% Reels, 25% Carousel, 15% lain-lain. Dengan 335K TT followers, cross-post TT ke IG Reels = instant content boost.</p>
         </div>
       </div>
     </div>
@@ -1201,16 +1540,22 @@ allCharts.pilarIdeal = mk('chartPilarIdeal', { type:'bar', data:{ labels:['Eduka
 // 14. Engagement per Pilar
 allCharts.pilarEng = mk('chartPilarEng', { type:'bar', data:{ labels:['Edukasi','Tips & Trik','Testimoni','Promo & CTA','BTS'], datasets:[{ label:'Avg ER (%)', data:[0.12,0.22,0.35,0.08,0.15], backgroundColor:['#3B82F6','#F59E0B','#10B981','#EF4444','#8B5CF6'], borderRadius:6 }] }, options:{ responsive:true, maintainAspectRatio:false, plugins:{legend:{display:false}}, scales:{y:{beginAtZero:true,grid:{color:'#F1F5F9'}},x:{grid:{display:false}}} } });
 
-// 15. Target vs Actual
+// 15. Format Engagement
+allCharts.formatEng = mk('chartFormatEng', { type:'bar', data:{ labels:['Reels/TikTok','Carousel','Live','Story','Single Image'], datasets:[{ label:'Avg ER (%)', data:[0.45,0.28,0.35,0.20,0.05], backgroundColor:['#EF4444','#F59E0B','#3B82F6','#10B981','#94A3B8'], borderRadius:6 }] }, options:{ responsive:true, maintainAspectRatio:false, plugins:{legend:{display:false},tooltip:{callbacks:{label:function(ctx){return ctx.raw+'% avg ER';}}}}, scales:{y:{beginAtZero:true,grid:{color:'#F1F5F9'},title:{display:true,text:'Avg ER (%)'}},x:{grid:{display:false}}} } });
+
+// 16. Best Posting Time
+allCharts.postTime = mk('chartPostTime', { type:'bar', data:{ labels:['06-08','08-10','10-12','12-14','14-16','16-18','18-20','20-22'], datasets:[{ label:'Engagement Index', data:[30,85,60,80,45,55,75,90], backgroundColor:function(ctx){var v=[30,85,60,80,45,55,75,90];return v[ctx.dataIndex]>=80?'#3B82F6':v[ctx.dataIndex]>=60?'#60A5FA':'#93C5FD';}, borderRadius:6 }] }, options:{ responsive:true, maintainAspectRatio:false, plugins:{legend:{display:false}}, scales:{y:{beginAtZero:true,max:100,grid:{color:'#F1F5F9'},title:{display:true,text:'Engagement Index'}},x:{grid:{display:false},title:{display:true,text:'Jam Posting'}}} } });
+
+// 17. Target vs Actual (was 15)
 allCharts.targetVsActual = mk('chartTargetVsActual', { type:'bar', data:{ labels:['Downloader','User Premium','Sales (Jt)','Konversi (%)','Avg Harga (K)'], datasets:[ {label:'Target',data:[14735,2210,221,15,100],backgroundColor:'rgba(59,130,246,0.3)',borderColor:'#3B82F6',borderWidth:2,borderRadius:6}, {label:'Actual',data:[9662,1988,221,20.58,111.2],backgroundColor:function(ctx){var pct=[65.6,90.0,100.0,137.2,111.2];return pct[ctx.dataIndex]>=100?'rgba(16,185,129,0.5)':pct[ctx.dataIndex]>=80?'rgba(245,158,11,0.5)':'rgba(239,68,68,0.5)';},borderRadius:6} ] }, options:{ responsive:true, maintainAspectRatio:false, plugins:{legend:{position:'top'}}, scales:{y:{beginAtZero:true,grid:{color:'#F1F5F9'}},x:{grid:{display:false}}} } });
 
-// 16. Projection
+// 18. Projection
 allCharts.projection = mk('chartProjection', { type:'line', data:{ labels:['1 Jun','5','10','15','20','25','30 Jun'], datasets:[ {label:'Target Pace',data:[0,36.8,73.5,110.3,147.0,183.8,221.0],borderColor:'#3B82F6',borderDash:[5,5],borderWidth:2,pointRadius:0,fill:false}, {label:'Actual',data:[0,1.5,3.8,6.2,8.8,11.4,null],borderColor:'#EF4444',borderWidth:2,pointRadius:4,pointBackgroundColor:'#EF4444',fill:false}, {label:'Projected',data:[null,null,null,null,null,11.4,13.7],borderColor:'#F59E0B',borderDash:[3,3],borderWidth:2,pointRadius:3,fill:false} ] }, options:{ responsive:true, maintainAspectRatio:false, plugins:{legend:{position:'bottom'}}, scales:{y:{beginAtZero:true,max:230,grid:{color:'#F1F5F9'},title:{display:true,text:'Revenue (Juta Rp)'}},x:{grid:{display:false}}} } });
 
-// 17. Avg Trx Value
+// 19. Avg Trx Value
 allCharts.avgTrx = mk('chartAvgTrx', { type:'line', data:{ labels:['Nov 25','Des 25','Jan 26','Feb 26','Mar 26','Apr 26','Mei 26','Jun 26*'], datasets:[{ label:'Avg Trx (Rp)', data:[147549,174130,162668,158348,115274,111459,112241,126741], borderColor:'#8B5CF6', backgroundColor:'rgba(139,92,246,0.1)', borderWidth:2, pointBackgroundColor:'#8B5CF6', pointRadius:5, fill:true, tension:0.3 }] }, options:{ responsive:true, maintainAspectRatio:false, plugins:{legend:{display:false},tooltip:{callbacks:{label:function(ctx){return 'Rp'+Math.round(ctx.raw).toLocaleString('id-ID');}}}}, scales:{y:{grid:{color:'#F1F5F9'},title:{display:true,text:'Rp'}},x:{grid:{display:false}}} } });
 
-// 18. New vs Returning
+// 20. New vs Returning
 allCharts.newReturn = mk('chartNewReturn', { type:'bar', data:{ labels:['Nov 25','Des 25','Jan 26','Feb 26','Mar 26','Apr 26','Mei 26','Jun 26*'], datasets:[ {label:'New Buyers',data:[432,251,454,321,676,1727,545,78],backgroundColor:'#3B82F6',borderRadius:6}, {label:'Returning',data:[163,46,83,69,110,248,49,12],backgroundColor:'#93C5FD',borderRadius:6} ] }, options:{ responsive:true, maintainAspectRatio:false, plugins:{legend:{position:'top'}}, scales:{y:{beginAtZero:true,stacked:true,grid:{color:'#F1F5F9'}},x:{stacked:true,grid:{display:false}}} } });
 
 </script>
